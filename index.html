@@ -67,6 +67,21 @@
       position: relative;
     }
 
+    /* RTL Support */
+    body.rtl {
+      direction: rtl;
+      text-align: right;
+    }
+    body.rtl .nav-menu {
+      /* tidak perlu diubah, flex sudah otomatis */
+    }
+    body.rtl .hero-left {
+      text-align: right;
+    }
+    body.rtl .btn {
+      /* optional */
+    }
+
     /* ===== BACKGROUND SUPER DINAMIS ===== */
     .leaf-container {
       position: fixed;
@@ -291,7 +306,61 @@
       transition: 0.2s;
     }
 
-    /* Mobile menu fixed */
+    /* Language selector */
+    .lang-selector {
+      position: relative;
+      margin: 0 0.5rem;
+    }
+    .lang-btn {
+      background: transparent;
+      border: 1.5px solid var(--accent-soft);
+      border-radius: 40px;
+      padding: 0.5rem 1rem;
+      color: var(--accent-green);
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: 0.3s;
+    }
+    .lang-btn:hover {
+      background: var(--accent-soft);
+    }
+    .lang-dropdown {
+      position: absolute;
+      top: 120%;
+      right: 0;
+      background: var(--nav-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--card-border);
+      border-radius: 30px;
+      padding: 0.5rem;
+      min-width: 120px;
+      display: none;
+      flex-direction: column;
+      z-index: 2000;
+    }
+    .lang-selector:hover .lang-dropdown {
+      display: flex;
+    }
+    .lang-dropdown button {
+      background: none;
+      border: none;
+      padding: 0.7rem 1rem;
+      text-align: left;
+      color: var(--text-primary);
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+    .lang-dropdown button:hover {
+      background: var(--accent-soft);
+      color: var(--accent-green);
+    }
+
+    /* Mobile menu */
     @media (max-width: 800px) {
       .nav-menu {
         position: fixed;
@@ -330,9 +399,16 @@
         display: block;
         z-index: 2100;
       }
+      .lang-selector {
+        margin: 0;
+      }
+      .lang-dropdown {
+        right: auto;
+        left: 0;
+      }
     }
 
-    /* ===== SECTIONS with staggered animation ===== */
+    /* ===== SECTIONS ===== */
     section {
       margin: 7rem 0;
       opacity: 0;
@@ -544,6 +620,9 @@
     .testimonial-card {
       text-align: left;
     }
+    body.rtl .testimonial-card {
+      text-align: right;
+    }
     .testimonial-card .avatar {
       width: 70px;
       height: 70px;
@@ -646,14 +725,14 @@
       .product-card, .usp-card, .team-card, .testimonial-card, .quality-card { padding: 1.5rem; }
       .final-cta { padding: 2rem; }
       .final-cta h3 { font-size: 1.8rem; }
-      .quality-card p { font-size: 0.95rem; } /* agar deskripsi tidak terlalu panjang */
+      .quality-card p { font-size: 0.95rem; }
     }
   </style>
 </head>
 <body class="light-mode">
-  <!-- Sticky CTA dengan link WhatsApp nyata (contoh nomor) -->
+  <!-- Sticky CTA -->
   <a href="https://wa.me/6281234567890?text=Halo%20AUREVIA%2C%20saya%20ingin%20memesan" class="sticky-cta" target="_blank">
-    <i class="fab fa-whatsapp"></i> Pesan Sekarang
+    <i class="fab fa-whatsapp"></i> <span data-i18n="stickyCta">Pesan Sekarang</span>
   </a>
 
   <!-- Background animations -->
@@ -665,14 +744,25 @@
   <nav>
     <div class="logo">AUREVIA</div>
     <div class="nav-menu" id="navMenu">
-      <a href="#home">Beranda</a>
-      <a href="#produk">Produk</a>
-      <a href="#keunikan">Keunikan</a>
-      <a href="#testimoni">Testimoni</a>
-      <a href="#visi">Visi</a>
-      <a href="#tim">Tim</a>
+      <a href="#home" data-i18n="navHome">Beranda</a>
+      <a href="#produk" data-i18n="navProducts">Produk</a>
+      <a href="#keunikan" data-i18n="navUniqueness">Keunikan</a>
+      <a href="#testimoni" data-i18n="navTestimonials">Testimoni</a>
+      <a href="#visi" data-i18n="navVision">Visi</a>
+      <a href="#tim" data-i18n="navTeam">Tim</a>
     </div>
     <div style="display: flex; gap: 1rem; align-items: center;">
+      <!-- Language Selector -->
+      <div class="lang-selector">
+        <button class="lang-btn"><i class="fas fa-globe"></i> <span id="currentLang">ID</span></button>
+        <div class="lang-dropdown">
+          <button onclick="switchLanguage('id')">Indonesia</button>
+          <button onclick="switchLanguage('en')">English</button>
+          <button onclick="switchLanguage('zh')">中文</button>
+          <button onclick="switchLanguage('ja')">日本語</button>
+          <button onclick="switchLanguage('ar')">العربية</button>
+        </div>
+      </div>
       <button class="theme-toggle" id="themeToggle" aria-label="Ganti tema">
         <i class="fas fa-sun" id="themeIcon"></i>
       </button>
@@ -686,9 +776,9 @@
     <!-- Hero -->
     <section id="home" class="hero visible">
       <div class="hero-left">
-        <h1>Inovasi <span class="hero-highlight">Kelor Premium</span><br>Kebanggaan Indonesia</h1>
-        <p>Mengangkat kelor lokal ke level global: sehat, elegan, memberdayakan petani. Tiga varian unik dengan nutrisi terjaga, sertifikasi halal & BPOM.</p>
-        <button class="btn" onclick="document.getElementById('produk').scrollIntoView({behavior:'smooth'})">Jelajahi Varian</button>
+        <h1><span data-i18n="heroTitle1">Inovasi</span> <span class="hero-highlight" data-i18n="heroTitleHighlight">Kelor Premium</span><br><span data-i18n="heroTitle2">Kebanggaan Indonesia</span></h1>
+        <p data-i18n="heroDesc">Mengangkat kelor lokal ke level global: sehat, elegan, memberdayakan petani. Tiga varian unik dengan nutrisi terjaga, sertifikasi halal & BPOM.</p>
+        <button class="btn" onclick="document.getElementById('produk').scrollIntoView({behavior:'smooth'})" data-i18n="heroBtn">Jelajahi Varian</button>
       </div>
       <div style="flex:1; text-align:center;">
         <i class="fas fa-leaf" style="font-size: 15rem; color: var(--accent-soft); opacity:0.5; filter: drop-shadow(0 0 30px var(--accent-green));"></i>
@@ -697,135 +787,135 @@
 
     <!-- Trust & Sertifikasi -->
     <section id="trust">
-      <h2>Kenapa Harus Percaya AUREVIA?</h2>
+      <h2 data-i18n="trustTitle">Kenapa Harus Percaya AUREVIA?</h2>
       <div class="trust-badges">
-        <div class="cert-item"><i class="fas fa-certificate"></i><span>Halal</span></div>
-        <div class="cert-item"><i class="fas fa-check-circle"></i><span>BPOM RI</span></div>
-        <div class="cert-item"><i class="fas fa-leaf"></i><span>Organik</span></div>
-        <div class="cert-item"><i class="fas fa-truck"></i><span>PIRT</span></div>
+        <div class="cert-item"><i class="fas fa-certificate"></i><span data-i18n="halal">Halal</span></div>
+        <div class="cert-item"><i class="fas fa-check-circle"></i><span data-i18n="bpom">BPOM RI</span></div>
+        <div class="cert-item"><i class="fas fa-leaf"></i><span data-i18n="organic">Organik</span></div>
+        <div class="cert-item"><i class="fas fa-truck"></i><span data-i18n="pirt">PIRT</span></div>
       </div>
-      <p style="text-align:center; color: var(--text-secondary);">*Sertifikasi dalam proses, komitmen kami pada kualitas dan keamanan.</p>
+      <p style="text-align:center; color: var(--text-secondary);" data-i18n="trustNote">*Sertifikasi dalam proses, komitmen kami pada kualitas dan keamanan.</p>
     </section>
 
     <!-- Testimoni -->
     <section id="testimoni">
-      <h2>Apa Kata Mereka?</h2>
+      <h2 data-i18n="testimonialsTitle">Apa Kata Mereka?</h2>
       <div class="card-grid">
-        <div class="testimonial-card" style="--i:1"><div class="avatar"><i class="fas fa-user"></i></div><p>"Rasa AMARTA creamy dan tidak langu, cocok untuk pagi hari. Saya merasa lebih berenergi!"</p><h4>— Dr. Anita, Nutritionist</h4></div>
-        <div class="testimonial-card" style="--i:2"><div class="avatar"><i class="fas fa-user"></i></div><p>"Sebagai pecinta matcha, ARKANA smoky benar-benar unik. Ini kompetitor serius!"</p><h4>— Rizky, Food Blogger</h4></div>
-        <div class="testimonial-card" style="--i:3"><div class="avatar"><i class="fas fa-user"></i></div><p>"Petani lokal terbantu, produknya premium. Bangga pakai AUREVIA."</p><h4>— Siti, Komunitas Vegan</h4></div>
+        <div class="testimonial-card" style="--i:1"><div class="avatar"><i class="fas fa-user"></i></div><p data-i18n="testimonial1">"Rasa AMARTA creamy dan tidak langu, cocok untuk pagi hari. Saya merasa lebih berenergi!"</p><h4 data-i18n="testimonial1Name">— Dr. Anita, Nutritionist</h4></div>
+        <div class="testimonial-card" style="--i:2"><div class="avatar"><i class="fas fa-user"></i></div><p data-i18n="testimonial2">"Sebagai pecinta matcha, ARKANA smoky benar-benar unik. Ini kompetitor serius!"</p><h4 data-i18n="testimonial2Name">— Rizky, Food Blogger</h4></div>
+        <div class="testimonial-card" style="--i:3"><div class="avatar"><i class="fas fa-user"></i></div><p data-i18n="testimonial3">"Petani lokal terbantu, produknya premium. Bangga pakai AUREVIA."</p><h4 data-i18n="testimonial3Name">— Siti, Komunitas Vegan</h4></div>
       </div>
     </section>
 
     <!-- Produk -->
     <section id="produk">
-      <h2>Varian · Kebaikan</h2>
+      <h2 data-i18n="productsTitle">Varian · Kebaikan</h2>
       <div class="card-grid">
-        <div class="product-card" style="--i:1"><span class="badge">Gold</span><h3>AMARTA</h3><p class="price">Rp 95K</p><p>Creamy Vanilla & Kolostrum — imun booster.</p></div>
-        <div class="product-card" style="--i:2"><span class="badge">Murni</span><h3>ANANTA</h3><p class="price">Rp 75K</p><p>Mild Moringa, 100% daun kelor Grade A.</p></div>
-        <div class="product-card" style="--i:3"><span class="badge">Black</span><h3>ARKANA</h3><p class="price">Rp 85K</p><p>Smoky Toasty Roasted — fermentasi & sangrai.</p></div>
+        <div class="product-card" style="--i:1"><span class="badge" data-i18n="badgeGold">Gold</span><h3>AMARTA</h3><p class="price">Rp 95K</p><p data-i18n="product1Desc">Creamy Vanilla & Kolostrum — imun booster.</p></div>
+        <div class="product-card" style="--i:2"><span class="badge" data-i18n="badgePure">Murni</span><h3>ANANTA</h3><p class="price">Rp 75K</p><p data-i18n="product2Desc">Mild Moringa, 100% daun kelor Grade A.</p></div>
+        <div class="product-card" style="--i:3"><span class="badge" data-i18n="badgeBlack">Black</span><h3>ARKANA</h3><p class="price">Rp 85K</p><p data-i18n="product3Desc">Smoky Toasty Roasted — fermentasi & sangrai.</p></div>
       </div>
     </section>
 
     <!-- Inovasi & Keunikan -->
     <section id="keunikan">
-      <h2>Inovasi & Keunikan</h2>
+      <h2 data-i18n="uniquenessTitle">Inovasi & Keunikan</h2>
       <div class="card-grid">
-        <div class="usp-card" style="--i:1"><i class="fas fa-temperature-low usp-icon"></i><h3>Dehidrator Suhu Rendah</h3><p>Nutrisi terjaga 100%.</p></div>
-        <div class="usp-card" style="--i:2"><i class="fas fa-seedling usp-icon"></i><h3>100% Alami + Stevia</h3><p>Tanpa gula tambahan.</p></div>
-        <div class="usp-card" style="--i:3"><i class="fas fa-cow usp-icon"></i><h3>Kolostrum (Gold)</h3><p>Tingkatkan imun.</p></div>
-        <div class="usp-card" style="--i:4"><i class="fas fa-fire usp-icon"></i><h3>Fermentasi & Sangrai</h3><p>Rasa smoky unik.</p></div>
+        <div class="usp-card" style="--i:1"><i class="fas fa-temperature-low usp-icon"></i><h3 data-i18n="usp1Title">Dehidrator Suhu Rendah</h3><p data-i18n="usp1Desc">Nutrisi terjaga 100%.</p></div>
+        <div class="usp-card" style="--i:2"><i class="fas fa-seedling usp-icon"></i><h3 data-i18n="usp2Title">100% Alami + Stevia</h3><p data-i18n="usp2Desc">Tanpa gula tambahan.</p></div>
+        <div class="usp-card" style="--i:3"><i class="fas fa-cow usp-icon"></i><h3 data-i18n="usp3Title">Kolostrum (Gold)</h3><p data-i18n="usp3Desc">Tingkatkan imun.</p></div>
+        <div class="usp-card" style="--i:4"><i class="fas fa-fire usp-icon"></i><h3 data-i18n="usp4Title">Fermentasi & Sangrai</h3><p data-i18n="usp4Desc">Rasa smoky unik.</p></div>
       </div>
     </section>
 
     <!-- Perbandingan (Competitive) -->
     <section id="perbandingan">
-      <h2>AUREVIA vs Lainnya</h2>
+      <h2 data-i18n="comparisonTitle">AUREVIA vs Lainnya</h2>
       <div class="comparison">
-        <div class="comparison-item"><i class="fas fa-check-circle" style="color:green;"></i><h4>AUREVIA</h4><p>Dehidrasi rendah, kolostrum, tanpa langu</p></div>
-        <div class="comparison-item"><i class="fas fa-leaf"></i><h4>Matcha Impor</h4><p>Harga tinggi, bukan lokal</p></div>
-        <div class="comparison-item"><i class="fas fa-times-circle" style="color:red;"></i><h4>Kelor Biasa</h4><p>Rasa langu, kemasan kurang</p></div>
+        <div class="comparison-item"><i class="fas fa-check-circle" style="color:green;"></i><h4>AUREVIA</h4><p data-i18n="comp1">Dehidrasi rendah, kolostrum, tanpa langu</p></div>
+        <div class="comparison-item"><i class="fas fa-leaf"></i><h4 data-i18n="comp2Title">Matcha Impor</h4><p data-i18n="comp2">Harga tinggi, bukan lokal</p></div>
+        <div class="comparison-item"><i class="fas fa-times-circle" style="color:red;"></i><h4 data-i18n="comp3Title">Kelor Biasa</h4><p data-i18n="comp3">Rasa langu, kemasan kurang</p></div>
       </div>
-      <p style="text-align:center; margin-top:1rem;">*Berdasarkan persepsi pasar dan keunggulan produk.</p>
+      <p style="text-align:center; margin-top:1rem;" data-i18n="compNote">*Berdasarkan persepsi pasar dan keunggulan produk.</p>
     </section>
 
-    <!-- PERJALANAN KUALITAS (pengganti How It's Made) -->
+    <!-- Perjalanan Kualitas -->
     <section id="kualitas">
-      <h2>Perjalanan Kualitas AUREVIA</h2>
+      <h2 data-i18n="qualityTitle">Perjalanan Kualitas AUREVIA</h2>
       <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
         <div class="quality-card" style="--i:1">
           <i class="fas fa-hand-holding-heart usp-icon"></i>
-          <h3>Petani Terpilih</h3>
-          <p>Bekerja sama dengan petani lokal berpengalaman yang menerapkan budidaya organik dan ramah lingkungan.</p>
+          <h3 data-i18n="quality1Title">Petani Terpilih</h3>
+          <p data-i18n="quality1Desc">Bekerja sama dengan petani lokal berpengalaman yang menerapkan budidaya organik dan ramah lingkungan.</p>
         </div>
         <div class="quality-card" style="--i:2">
           <i class="fas fa-search usp-icon"></i>
-          <h3>Quality Control</h3>
-          <p>Setiap daun kelor melewati pemeriksaan ketat untuk memastikan hanya grade A yang diproses lebih lanjut.</p>
+          <h3 data-i18n="quality2Title">Quality Control</h3>
+          <p data-i18n="quality2Desc">Setiap daun kelor melewati pemeriksaan ketat untuk memastikan hanya grade A yang diproses lebih lanjut.</p>
         </div>
         <div class="quality-card" style="--i:3">
           <i class="fas fa-flask usp-icon"></i>
-          <h3>Pengolahan Terjaga</h3>
-          <p>Dengan teknologi dehidrasi rendah dan fermentasi terkendali, seluruh nutrisi dan cita rasa dipertahankan.</p>
+          <h3 data-i18n="quality3Title">Pengolahan Terjaga</h3>
+          <p data-i18n="quality3Desc">Dengan teknologi dehidrasi rendah dan fermentasi terkendali, seluruh nutrisi dan cita rasa dipertahankan.</p>
         </div>
         <div class="quality-card" style="--i:4">
           <i class="fas fa-truck usp-icon"></i>
-          <h3>Distribusi</h3>
-          <p>Produk dikemas dan didistribusikan dengan standar tertinggi, siap menemani gaya hidup sehat Anda.</p>
+          <h3 data-i18n="quality4Title">Distribusi</h3>
+          <p data-i18n="quality4Desc">Produk dikemas dan didistribusikan dengan standar tertinggi, siap menemani gaya hidup sehat Anda.</p>
         </div>
       </div>
     </section>
 
-    <!-- VISI & ARAH PERTUMBUHAN -->
+    <!-- Visi & Arah Pertumbuhan -->
     <section id="visi">
-      <h2>Visi & Arah Pertumbuhan</h2>
+      <h2 data-i18n="visionTitle">Visi & Arah Pertumbuhan</h2>
       <div class="card-grid">
         <div class="vision-card" style="--i:1">
           <i class="fas fa-seedling usp-icon"></i>
-          <h3>Inovasi Berkelanjutan</h3>
-          <p>Terus mengembangkan teknologi dehidrasi rendah dan varian rasa baru untuk memenuhi kebutuhan konsumen modern.</p>
+          <h3 data-i18n="vision1Title">Inovasi Berkelanjutan</h3>
+          <p data-i18n="vision1Desc">Terus mengembangkan teknologi dehidrasi rendah dan varian rasa baru untuk memenuhi kebutuhan konsumen modern.</p>
         </div>
         <div class="vision-card" style="--i:2">
           <i class="fas fa-handshake usp-icon"></i>
-          <h3>Kemitraan Petani</h3>
-          <p>Memberdayakan petani lokal melalui program kemitraan adil dan pelatihan budidaya organik.</p>
+          <h3 data-i18n="vision2Title">Kemitraan Petani</h3>
+          <p data-i18n="vision2Desc">Memberdayakan petani lokal melalui program kemitraan adil dan pelatihan budidaya organik.</p>
         </div>
         <div class="vision-card" style="--i:3">
           <i class="fas fa-globe usp-icon"></i>
-          <h3>Ekspansi Global</h3>
-          <p>Membawa kelor premium Indonesia ke pasar internasional dengan tetap mempertahankan kualitas dan kearifan lokal.</p>
+          <h3 data-i18n="vision3Title">Ekspansi Global</h3>
+          <p data-i18n="vision3Desc">Membawa kelor premium Indonesia ke pasar internasional dengan tetap mempertahankan kualitas dan kearifan lokal.</p>
         </div>
       </div>
     </section>
 
     <!-- Tim -->
     <section id="tim">
-      <h2>Tim Hebat</h2>
+      <h2 data-i18n="teamTitle">Tim Hebat</h2>
       <div class="card-grid">
-        <div class="team-card" style="--i:1"><i class="fas fa-user-circle"></i><h4>M. Syahrul Akbar</h4><p>CEO</p></div>
-        <div class="team-card" style="--i:2"><i class="fas fa-user-circle"></i><h4>MH. Alliwa</h4><p>COO & Founder</p></div>
-        <div class="team-card" style="--i:3"><i class="fas fa-user-circle"></i><h4>RIFA</h4><p>CLO</p></div>
-        <div class="team-card" style="--i:4"><i class="fas fa-user-circle"></i><h4>NAWA</h4><p>CCO</p></div>
+        <div class="team-card" style="--i:1"><i class="fas fa-user-circle"></i><h4>M. Syahrul Akbar</h4><p data-i18n="ceo">CEO</p></div>
+        <div class="team-card" style="--i:2"><i class="fas fa-user-circle"></i><h4>MH. Alliwa</h4><p data-i18n="coo">COO & Founder</p></div>
+        <div class="team-card" style="--i:3"><i class="fas fa-user-circle"></i><h4>RIFA</h4><p data-i18n="clo">CLO</p></div>
+        <div class="team-card" style="--i:4"><i class="fas fa-user-circle"></i><h4>NAWA</h4><p data-i18n="cco">CCO</p></div>
       </div>
     </section>
 
     <!-- Final CTA -->
     <section class="final-cta">
-      <h3>Siap Jadi Bagian Revolusi Kelor?</h3>
+      <h3 data-i18n="finalCtaTitle">Siap Jadi Bagian Revolusi Kelor?</h3>
       <div class="cta-group">
-        <a href="https://wa.me/6281234567890?text=Halo%20AUREVIA%2C%20saya%20ingin%20memesan" class="btn" target="_blank">Pesan Sekarang</a>
-        <a href="https://wa.me/6281234567890?text=Halo%20AUREVIA%2C%20saya%20ingin%20menjadi%20mitra" class="btn" target="_blank">Jadi Mitra</a>
-        <a href="mailto:info@aurevia.id" class="btn">Hubungi Kami</a>
+        <a href="https://wa.me/6281234567890?text=Halo%20AUREVIA%2C%20saya%20ingin%20memesan" class="btn" target="_blank" data-i18n="orderBtn">Pesan Sekarang</a>
+        <a href="https://wa.me/6281234567890?text=Halo%20AUREVIA%2C%20saya%20ingin%20menjadi%20mitra" class="btn" target="_blank" data-i18n="partnerBtn">Jadi Mitra</a>
+        <a href="mailto:info@aurevia.id" class="btn" data-i18n="contactBtn">Hubungi Kami</a>
       </div>
     </section>
   </main>
 
   <footer>
-    <i class="fas fa-leaf"></i> AUREVIA — Kelor Premium Kebanggaan Indonesia <br>
+    <i class="fas fa-leaf"></i> <span data-i18n="footerBrand">AUREVIA — Kelor Premium Kebanggaan Indonesia</span> <br>
     <span>info@aurevia.id | @AUREVIA_id</span><br>
     <div class="footer-links">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms & Conditions</a>
+      <a href="#" data-i18n="privacy">Privacy Policy</a>
+      <a href="#" data-i18n="terms">Terms & Conditions</a>
     </div>
     <small>© 2025 AUREVIA. All rights reserved.</small>
   </footer>
@@ -863,7 +953,429 @@
         });
       });
 
-      // Optimized leaf generator with rAF and max 18 leaves
+      // Language translations
+      const translations = {
+        id: {
+          stickyCta: 'Pesan Sekarang',
+          navHome: 'Beranda',
+          navProducts: 'Produk',
+          navUniqueness: 'Keunikan',
+          navTestimonials: 'Testimoni',
+          navVision: 'Visi',
+          navTeam: 'Tim',
+          heroTitle1: 'Inovasi',
+          heroTitleHighlight: 'Kelor Premium',
+          heroTitle2: 'Kebanggaan Indonesia',
+          heroDesc: 'Mengangkat kelor lokal ke level global: sehat, elegan, memberdayakan petani. Tiga varian unik dengan nutrisi terjaga, sertifikasi halal & BPOM.',
+          heroBtn: 'Jelajahi Varian',
+          trustTitle: 'Kenapa Harus Percaya AUREVIA?',
+          halal: 'Halal',
+          bpom: 'BPOM RI',
+          organic: 'Organik',
+          pirt: 'PIRT',
+          trustNote: '*Sertifikasi dalam proses, komitmen kami pada kualitas dan keamanan.',
+          testimonialsTitle: 'Apa Kata Mereka?',
+          testimonial1: '"Rasa AMARTA creamy dan tidak langu, cocok untuk pagi hari. Saya merasa lebih berenergi!"',
+          testimonial1Name: '— Dr. Anita, Nutritionist',
+          testimonial2: '"Sebagai pecinta matcha, ARKANA smoky benar-benar unik. Ini kompetitor serius!"',
+          testimonial2Name: '— Rizky, Food Blogger',
+          testimonial3: '"Petani lokal terbantu, produknya premium. Bangga pakai AUREVIA."',
+          testimonial3Name: '— Siti, Komunitas Vegan',
+          productsTitle: 'Varian · Kebaikan',
+          badgeGold: 'Gold',
+          product1Desc: 'Creamy Vanilla & Kolostrum — imun booster.',
+          badgePure: 'Murni',
+          product2Desc: 'Mild Moringa, 100% daun kelor Grade A.',
+          badgeBlack: 'Black',
+          product3Desc: 'Smoky Toasty Roasted — fermentasi & sangrai.',
+          uniquenessTitle: 'Inovasi & Keunikan',
+          usp1Title: 'Dehidrator Suhu Rendah',
+          usp1Desc: 'Nutrisi terjaga 100%.',
+          usp2Title: '100% Alami + Stevia',
+          usp2Desc: 'Tanpa gula tambahan.',
+          usp3Title: 'Kolostrum (Gold)',
+          usp3Desc: 'Tingkatkan imun.',
+          usp4Title: 'Fermentasi & Sangrai',
+          usp4Desc: 'Rasa smoky unik.',
+          comparisonTitle: 'AUREVIA vs Lainnya',
+          comp1: 'Dehidrasi rendah, kolostrum, tanpa langu',
+          comp2Title: 'Matcha Impor',
+          comp2: 'Harga tinggi, bukan lokal',
+          comp3Title: 'Kelor Biasa',
+          comp3: 'Rasa langu, kemasan kurang',
+          compNote: '*Berdasarkan persepsi pasar dan keunggulan produk.',
+          qualityTitle: 'Perjalanan Kualitas AUREVIA',
+          quality1Title: 'Petani Terpilih',
+          quality1Desc: 'Bekerja sama dengan petani lokal berpengalaman yang menerapkan budidaya organik dan ramah lingkungan.',
+          quality2Title: 'Quality Control',
+          quality2Desc: 'Setiap daun kelor melewati pemeriksaan ketat untuk memastikan hanya grade A yang diproses lebih lanjut.',
+          quality3Title: 'Pengolahan Terjaga',
+          quality3Desc: 'Dengan teknologi dehidrasi rendah dan fermentasi terkendali, seluruh nutrisi dan cita rasa dipertahankan.',
+          quality4Title: 'Distribusi',
+          quality4Desc: 'Produk dikemas dan didistribusikan dengan standar tertinggi, siap menemani gaya hidup sehat Anda.',
+          visionTitle: 'Visi & Arah Pertumbuhan',
+          vision1Title: 'Inovasi Berkelanjutan',
+          vision1Desc: 'Terus mengembangkan teknologi dehidrasi rendah dan varian rasa baru untuk memenuhi kebutuhan konsumen modern.',
+          vision2Title: 'Kemitraan Petani',
+          vision2Desc: 'Memberdayakan petani lokal melalui program kemitraan adil dan pelatihan budidaya organik.',
+          vision3Title: 'Ekspansi Global',
+          vision3Desc: 'Membawa kelor premium Indonesia ke pasar internasional dengan tetap mempertahankan kualitas dan kearifan lokal.',
+          teamTitle: 'Tim Hebat',
+          ceo: 'CEO',
+          coo: 'COO & Founder',
+          clo: 'CLO',
+          cco: 'CCO',
+          finalCtaTitle: 'Siap Jadi Bagian Revolusi Kelor?',
+          orderBtn: 'Pesan Sekarang',
+          partnerBtn: 'Jadi Mitra',
+          contactBtn: 'Hubungi Kami',
+          footerBrand: 'AUREVIA — Kelor Premium Kebanggaan Indonesia',
+          privacy: 'Privacy Policy',
+          terms: 'Terms & Conditions',
+        },
+        en: {
+          stickyCta: 'Order Now',
+          navHome: 'Home',
+          navProducts: 'Products',
+          navUniqueness: 'Uniqueness',
+          navTestimonials: 'Testimonials',
+          navVision: 'Vision',
+          navTeam: 'Team',
+          heroTitle1: 'Innovation',
+          heroTitleHighlight: 'Premium Moringa',
+          heroTitle2: 'Indonesian Pride',
+          heroDesc: 'Elevating local moringa to global level: healthy, elegant, empowering farmers. Three unique variants with preserved nutrients, halal & BPOM certified.',
+          heroBtn: 'Explore Variants',
+          trustTitle: 'Why Trust AUREVIA?',
+          halal: 'Halal',
+          bpom: 'BPOM RI',
+          organic: 'Organic',
+          pirt: 'PIRT',
+          trustNote: '*Certifications in process, our commitment to quality and safety.',
+          testimonialsTitle: 'What They Say?',
+          testimonial1: '"AMARTA tastes creamy and not bitter, perfect for mornings. I feel more energized!"',
+          testimonial1Name: '— Dr. Anita, Nutritionist',
+          testimonial2: '"As a matcha lover, ARKANA smoky is truly unique. This is a serious competitor!"',
+          testimonial2Name: '— Rizky, Food Blogger',
+          testimonial3: '"Local farmers are helped, the product is premium. Proud to use AUREVIA."',
+          testimonial3Name: '— Siti, Vegan Community',
+          productsTitle: 'Variants · Goodness',
+          badgeGold: 'Gold',
+          product1Desc: 'Creamy Vanilla & Colostrum — immune booster.',
+          badgePure: 'Pure',
+          product2Desc: 'Mild Moringa, 100% Grade A moringa leaves.',
+          badgeBlack: 'Black',
+          product3Desc: 'Smoky Toasty Roasted — fermentation & roasting.',
+          uniquenessTitle: 'Innovation & Uniqueness',
+          usp1Title: 'Low-Temperature Dehydrator',
+          usp1Desc: '100% nutrients preserved.',
+          usp2Title: '100% Natural + Stevia',
+          usp2Desc: 'No added sugar.',
+          usp3Title: 'Colostrum (Gold)',
+          usp3Desc: 'Boost immunity.',
+          usp4Title: 'Fermentation & Roasting',
+          usp4Desc: 'Unique smoky flavor.',
+          comparisonTitle: 'AUREVIA vs Others',
+          comp1: 'Low dehydration, colostrum, no bitterness',
+          comp2Title: 'Imported Matcha',
+          comp2: 'High price, not local',
+          comp3Title: 'Regular Moringa',
+          comp3: 'Bitter taste, poor packaging',
+          compNote: '*Based on market perception and product advantages.',
+          qualityTitle: 'AUREVIA Quality Journey',
+          quality1Title: 'Selected Farmers',
+          quality1Desc: 'Collaborating with experienced local farmers who practice organic and environmentally friendly cultivation.',
+          quality2Title: 'Quality Control',
+          quality2Desc: 'Every moringa leaf undergoes strict inspection to ensure only grade A is processed further.',
+          quality3Title: 'Preserved Processing',
+          quality3Desc: 'With low-temperature dehydration and controlled fermentation, all nutrients and flavors are maintained.',
+          quality4Title: 'Distribution',
+          quality4Desc: 'Products are packaged and distributed with the highest standards, ready to accompany your healthy lifestyle.',
+          visionTitle: 'Vision & Growth Direction',
+          vision1Title: 'Sustainable Innovation',
+          vision1Desc: 'Continuously developing low-temperature dehydration technology and new flavors to meet modern consumer needs.',
+          vision2Title: 'Farmer Partnerships',
+          vision2Desc: 'Empowering local farmers through fair partnership programs and organic farming training.',
+          vision3Title: 'Global Expansion',
+          vision3Desc: 'Bringing Indonesian premium moringa to international markets while maintaining quality and local wisdom.',
+          teamTitle: 'Great Team',
+          ceo: 'CEO',
+          coo: 'COO & Founder',
+          clo: 'CLO',
+          cco: 'CCO',
+          finalCtaTitle: 'Ready to Be Part of the Moringa Revolution?',
+          orderBtn: 'Order Now',
+          partnerBtn: 'Become a Partner',
+          contactBtn: 'Contact Us',
+          footerBrand: 'AUREVIA — Premium Moringa Indonesian Pride',
+          privacy: 'Privacy Policy',
+          terms: 'Terms & Conditions',
+        },
+        zh: {
+          stickyCta: '立即订购',
+          navHome: '首页',
+          navProducts: '产品',
+          navUniqueness: '独特之处',
+          navTestimonials: '客户评价',
+          navVision: '愿景',
+          navTeam: '团队',
+          heroTitle1: '创新',
+          heroTitleHighlight: '优质辣木',
+          heroTitle2: '印尼骄傲',
+          heroDesc: '将本地辣木提升到全球水平：健康、优雅、赋能农民。三种独特配方，保留营养，获得清真和BPOM认证。',
+          heroBtn: '探索系列',
+          trustTitle: '为什么信任AUREVIA？',
+          halal: '清真',
+          bpom: 'BPOM RI',
+          organic: '有机',
+          pirt: 'PIRT',
+          trustNote: '*认证进行中，我们对质量和安全的承诺。',
+          testimonialsTitle: '他们怎么说？',
+          testimonial1: '"AMARTA口感 creamy，不苦涩，非常适合早晨。我感觉更有活力！"',
+          testimonial1Name: '— Anita博士，营养师',
+          testimonial2: '"作为抹茶爱好者，ARKANA烟熏味非常独特。这是一个认真的竞争对手！"',
+          testimonial2Name: '— Rizky，美食博主',
+          testimonial3: '"本地农民受益，产品优质。为使用AUREVIA感到自豪。"',
+          testimonial3Name: '— Siti，素食社区',
+          productsTitle: '系列 · 益处',
+          badgeGold: '黄金',
+          product1Desc: '奶油香草与初乳 — 增强免疫力。',
+          badgePure: '纯',
+          product2Desc: '温和辣木，100% A级辣木叶。',
+          badgeBlack: '黑',
+          product3Desc: '烟熏烤香 — 发酵与烘焙。',
+          uniquenessTitle: '创新与独特',
+          usp1Title: '低温脱水',
+          usp1Desc: '100%保留营养。',
+          usp2Title: '100%天然+甜菊糖',
+          usp2Desc: '无添加糖。',
+          usp3Title: '初乳（黄金系列）',
+          usp3Desc: '增强免疫力。',
+          usp4Title: '发酵与烘焙',
+          usp4Desc: '独特的烟熏味。',
+          comparisonTitle: 'AUREVIA vs 其他',
+          comp1: '低温脱水，初乳，无苦涩',
+          comp2Title: '进口抹茶',
+          comp2: '价格高，非本地',
+          comp3Title: '普通辣木',
+          comp3: '苦涩，包装差',
+          compNote: '*基于市场认知和产品优势。',
+          qualityTitle: 'AUREVIA品质之旅',
+          quality1Title: '精选农民',
+          quality1Desc: '与经验丰富的本地农民合作，采用有机和环保种植方式。',
+          quality2Title: '质量控制',
+          quality2Desc: '每一片辣木叶都经过严格检查，确保只有A级进入后续加工。',
+          quality3Title: '保鲜加工',
+          quality3Desc: '通过低温脱水和可控发酵，保留全部营养和风味。',
+          quality4Title: '分销',
+          quality4Desc: '产品以最高标准包装和分销，随时陪伴您的健康生活方式。',
+          visionTitle: '愿景与成长方向',
+          vision1Title: '持续创新',
+          vision1Desc: '不断开发低温脱水技术和新口味，满足现代消费者需求。',
+          vision2Title: '农民合作',
+          vision2Desc: '通过公平的合作计划和有机种植培训赋能本地农民。',
+          vision3Title: '全球扩展',
+          vision3Desc: '将印尼优质辣木推向国际市场，同时保持品质和地方智慧。',
+          teamTitle: '优秀团队',
+          ceo: '首席执行官',
+          coo: '首席运营官兼创始人',
+          clo: '法务总监',
+          cco: '首席商务官',
+          finalCtaTitle: '准备好加入辣木革命了吗？',
+          orderBtn: '立即订购',
+          partnerBtn: '成为合作伙伴',
+          contactBtn: '联系我们',
+          footerBrand: 'AUREVIA — 印尼骄傲的优质辣木',
+          privacy: '隐私政策',
+          terms: '服务条款',
+        },
+        ja: {
+          stickyCta: '今すぐ注文',
+          navHome: 'ホーム',
+          navProducts: '製品',
+          navUniqueness: '独自性',
+          navTestimonials: 'お客様の声',
+          navVision: 'ビジョン',
+          navTeam: 'チーム',
+          heroTitle1: '革新',
+          heroTitleHighlight: 'プレミアムモリンガ',
+          heroTitle2: 'インドネシアの誇り',
+          heroDesc: '地元のモリンガをグローバルレベルに引き上げる：健康的でエレガント、農家を支援。栄養素を保持した3つのユニークなバリエーション、ハラール＆BPOM認証。',
+          heroBtn: 'バリエーションを見る',
+          trustTitle: 'なぜAUREVIAを信じるのか？',
+          halal: 'ハラール',
+          bpom: 'BPOM RI',
+          organic: 'オーガニック',
+          pirt: 'PIRT',
+          trustNote: '*認証は進行中、品質と安全性への取り組み。',
+          testimonialsTitle: '彼らの声',
+          testimonial1: '"AMARTAはクリーミーで苦みがなく、朝にぴったり。よりエネルギーが湧くのを感じます！"',
+          testimonial1Name: '— Anita博士、栄養士',
+          testimonial2: '"抹茶愛好家として、ARKANAのスモーキーな風味は本当にユニーク。これは本気の競合です！"',
+          testimonial2Name: '— Rizky、フードブロガー',
+          testimonial3: '"地元の農家が助かり、製品はプレミアム。AUREVIAを使うことを誇りに思います。"',
+          testimonial3Name: '— Siti、ヴィーガンコミュニティ',
+          productsTitle: 'バリエーション · 良さ',
+          badgeGold: 'ゴールド',
+          product1Desc: 'クリーミーバニラ＆初乳 — 免疫ブースター。',
+          badgePure: 'ピュア',
+          product2Desc: 'マイルドモリンガ、100％グレードAモリンガリーフ。',
+          badgeBlack: 'ブラック',
+          product3Desc: 'スモーキートーストロースト — 発酵＆焙煎。',
+          uniquenessTitle: '革新と独自性',
+          usp1Title: '低温脱水機',
+          usp1Desc: '栄養素100％保持。',
+          usp2Title: '100％天然＋ステビア',
+          usp2Desc: '砂糖無添加。',
+          usp3Title: '初乳（ゴールド）',
+          usp3Desc: '免疫力向上。',
+          usp4Title: '発酵＆焙煎',
+          usp4Desc: 'ユニークなスモーキーフレーバー。',
+          comparisonTitle: 'AUREVIA vs 他社',
+          comp1: '低温脱水、初乳、苦みなし',
+          comp2Title: '輸入抹茶',
+          comp2: '高価格、非地元',
+          comp3Title: '通常のモリンガ',
+          comp3: '苦みあり、パッケージ不良',
+          compNote: '*市場認識と製品優位性に基づく。',
+          qualityTitle: 'AUREVIA品質の旅',
+          quality1Title: '選ばれた農家',
+          quality1Desc: '有機的で環境に優しい栽培を行う経験豊富な地元農家と協力。',
+          quality2Title: '品質管理',
+          quality2Desc: 'すべてのモリンガリーフは厳格な検査を通過し、グレードAのみがさらに処理される。',
+          quality3Title: '保持された加工',
+          quality3Desc: '低温脱水と制御された発酵により、すべての栄養素と風味が維持される。',
+          quality4Title: '流通',
+          quality4Desc: '製品は最高基準で包装・流通され、健康的なライフスタイルに寄り添う。',
+          visionTitle: 'ビジョンと成長の方向性',
+          vision1Title: '持続可能な革新',
+          vision1Desc: '低温脱水技術と新しいフレーバーの継続的開発により、現代の消費者のニーズに応える。',
+          vision2Title: '農家とのパートナーシップ',
+          vision2Desc: '公平なパートナーシッププログラムと有機栽培トレーニングを通じて地元農家を支援。',
+          vision3Title: 'グローバル展開',
+          vision3Desc: 'インドネシアのプレミアムモリンガを国際市場に、品質と地域の知恵を保ちながら。',
+          teamTitle: '素晴らしいチーム',
+          ceo: 'CEO',
+          coo: 'COO＆創業者',
+          clo: 'CLO',
+          cco: 'CCO',
+          finalCtaTitle: 'モリンガ革命の一部になる準備はできましたか？',
+          orderBtn: '今すぐ注文',
+          partnerBtn: 'パートナーになる',
+          contactBtn: 'お問い合わせ',
+          footerBrand: 'AUREVIA — インドネシアの誇りプレミアムモリンガ',
+          privacy: 'プライバシーポリシー',
+          terms: '利用規約',
+        },
+        ar: {
+          stickyCta: 'اطلب الآن',
+          navHome: 'الرئيسية',
+          navProducts: 'المنتجات',
+          navUniqueness: 'التميز',
+          navTestimonials: 'الشهادات',
+          navVision: 'الرؤية',
+          navTeam: 'الفريق',
+          heroTitle1: 'ابتكار',
+          heroTitleHighlight: 'المورينغا الفاخرة',
+          heroTitle2: 'فخر إندونيسيا',
+          heroDesc: 'الارتقاء بالمورينغا المحلية إلى المستوى العالمي: صحي، أنيق، تمكين المزارعين. ثلاث تشكيلات فريدة مع الحفاظ على العناصر الغذائية، حلال ومعتمد من BPOM.',
+          heroBtn: 'استكشف التشكيلات',
+          trustTitle: 'لماذا تثق في AUREVIA؟',
+          halal: 'حلال',
+          bpom: 'BPOM RI',
+          organic: 'عضوي',
+          pirt: 'PIRT',
+          trustNote: '*الشهادات قيد التنفيذ، التزامنا بالجودة والسلامة.',
+          testimonialsTitle: 'ماذا يقولون؟',
+          testimonial1: '"AMARTA طعمه كريمي وليس مرًا، مثالي للصباح. أشعر بمزيد من النشاط!"',
+          testimonial1Name: '— د. أنيتا، أخصائية تغذية',
+          testimonial2: '"كمحب للماتشا، ARKANA المدخن فريد حقًا. هذا منافس جاد!"',
+          testimonial2Name: '— رزقي، مدون طعام',
+          testimonial3: '"المزارعون المحليون يستفيدون، المنتج فاخر. فخور باستخدام AUREVIA."',
+          testimonial3Name: '— سيتي، مجتمع النباتيين',
+          productsTitle: 'تشكيلات · الفوائد',
+          badgeGold: 'ذهبي',
+          product1Desc: 'فانيليا كريمية ولبأ — معزز المناعة.',
+          badgePure: 'نقي',
+          product2Desc: 'مورينغا معتدلة، 100% أوراق مورينغا درجة A.',
+          badgeBlack: 'أسود',
+          product3Desc: 'تحميص مدخن — تخمير وتحميص.',
+          uniquenessTitle: 'الابتكار والتميز',
+          usp1Title: 'مجفف بدرجة حرارة منخفضة',
+          usp1Desc: 'الحفاظ على 100% من العناصر الغذائية.',
+          usp2Title: 'طبيعي 100% + ستيفيا',
+          usp2Desc: 'بدون سكر مضاف.',
+          usp3Title: 'اللبأ (ذهبي)',
+          usp3Desc: 'تعزيز المناعة.',
+          usp4Title: 'التخمير والتحميص',
+          usp4Desc: 'نكهة مدخنة فريدة.',
+          comparisonTitle: 'AUREVIA مقابل الآخرين',
+          comp1: 'تجفيف منخفض، لبأ، بدون مرارة',
+          comp2Title: 'ماتشا مستوردة',
+          comp2: 'سعر مرتفع، غير محلي',
+          comp3Title: 'مورينغا عادية',
+          comp3: 'طعم مر، تغليف ضعيف',
+          compNote: '*بناءً على تصور السوق ومزايا المنتج.',
+          qualityTitle: 'رحلة جودة AUREVIA',
+          quality1Title: 'مزارعون مختارون',
+          quality1Desc: 'التعاون مع مزارعين محليين ذوي خبرة يطبقون الزراعة العضوية والصديقة للبيئة.',
+          quality2Title: 'مراقبة الجودة',
+          quality2Desc: 'تخضع كل ورقة مورينغا لفحص صارم لضمان معالجة الدرجة A فقط.',
+          quality3Title: 'معالجة محفوظة',
+          quality3Desc: 'مع التجفيف بدرجة حرارة منخفضة والتخمير المتحكم به، يتم الحفاظ على جميع العناصر الغذائية والنكهات.',
+          quality4Title: 'التوزيع',
+          quality4Desc: 'يتم تعبئة وتوزيع المنتجات بأعلى المعايير، جاهزة لمرافقة نمط حياتك الصحي.',
+          visionTitle: 'الرؤية واتجاه النمو',
+          vision1Title: 'ابتكار مستدام',
+          vision1Desc: 'تطوير تقنية التجفيف بدرجة حرارة منخفضة ونكهات جديدة لتلبية احتياجات المستهلكين المعاصرين.',
+          vision2Title: 'شراكات المزارعين',
+          vision2Desc: 'تمكين المزارعين المحليين من خلال برامج شراكة عادلة وتدريب على الزراعة العضوية.',
+          vision3Title: 'التوسع العالمي',
+          vision3Desc: 'جلب المورينغا الإندونيسية الفاخرة إلى الأسواق الدولية مع الحفاظ على الجودة والحكمة المحلية.',
+          teamTitle: 'فريق عظيم',
+          ceo: 'الرئيس التنفيذي',
+          coo: 'كبير مسؤولي التشغيل والمؤسس',
+          clo: 'كبير المسؤولين القانونيين',
+          cco: 'كبير مسؤولي التجارة',
+          finalCtaTitle: 'مستعد لتكون جزءًا من ثورة المورينغا؟',
+          orderBtn: 'اطلب الآن',
+          partnerBtn: 'كن شريكًا',
+          contactBtn: 'اتصل بنا',
+          footerBrand: 'AUREVIA — مورينغا فاخرة فخر إندونيسيا',
+          privacy: 'سياسة الخصوصية',
+          terms: 'الشروط والأحكام',
+        }
+      };
+
+      // Function to switch language
+      window.switchLanguage = function(lang) {
+        document.getElementById('currentLang').innerText = lang.toUpperCase();
+        // Update all elements with data-i18n
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (translations[lang] && translations[lang][key]) {
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+              el.placeholder = translations[lang][key];
+            } else {
+              el.innerHTML = translations[lang][key]; // innerHTML untuk mempertahankan tag jika ada
+            }
+          }
+        });
+        // Handle RTL for Arabic
+        if (lang === 'ar') {
+          body.classList.add('rtl');
+        } else {
+          body.classList.remove('rtl');
+        }
+        // Store preference
+        localStorage.setItem('preferredLanguage', lang);
+      };
+
+      // Load saved language
+      const savedLang = localStorage.getItem('preferredLanguage') || 'id';
+      switchLanguage(savedLang);
+
+      // Optimized leaf generator
       const leafContainer = document.getElementById('leafContainer');
       const leafIcons = ['fa-leaf', 'fa-seedling', 'fa-tree', 'fa-canadian-maple-leaf', 'fa-pagelines'];
       let leafCount = 0;
@@ -906,7 +1418,7 @@
         bokehContainer.appendChild(span);
       }
 
-      // Scroll reveal for sections and staggered children
+      // Scroll reveal
       const sections = document.querySelectorAll('section');
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -914,7 +1426,7 @@
             entry.target.classList.add('visible');
           }
         });
-      }, { threshold: 0.2, rootMargin: '0px' });
+      }, { threshold: 0.2 });
       sections.forEach(s => observer.observe(s));
 
       // Smooth scroll
