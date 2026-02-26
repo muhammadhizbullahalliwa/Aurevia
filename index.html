@@ -297,7 +297,7 @@
       transition: 0.2s;
     }
 
-    /* Language selector - diperbesar */
+    /* Language selector - click based */
     .lang-selector {
       position: relative;
       margin: 0 0.75rem;
@@ -330,13 +330,13 @@
       border: 1px solid var(--card-border);
       border-radius: 30px;
       padding: 0.5rem;
-      min-width: 140px;
+      min-width: 160px;
       display: none;
       flex-direction: column;
       z-index: 3000;
       box-shadow: var(--shadow);
     }
-    .lang-selector:hover .lang-dropdown {
+    .lang-dropdown.show {
       display: flex;
     }
     .lang-dropdown button {
@@ -748,13 +748,14 @@
       <a href="#tim" data-i18n="navTeam">Tim</a>
     </div>
     <div style="display: flex; gap: 1rem; align-items: center;">
-      <!-- Language Selector - sekarang lebih besar dan jelas -->
+      <!-- Language Selector - toggle dengan klik -->
       <div class="lang-selector">
-        <button class="lang-btn"><i class="fas fa-globe"></i> <span id="currentLang">ID</span></button>
-        <div class="lang-dropdown">
+        <button class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> <span id="currentLang">ID</span></button>
+        <div class="lang-dropdown" id="langDropdown">
           <button onclick="switchLanguage('id')">Indonesia</button>
           <button onclick="switchLanguage('en')">English</button>
-          <button onclick="switchLanguage('zh')">中文</button>
+          <button onclick="switchLanguage('zh')">中文 (简体)</button>
+          <button onclick="switchLanguage('zh-tw')">中文 (繁體)</button>
           <button onclick="switchLanguage('ja')">日本語</button>
           <button onclick="switchLanguage('ar')">العربية</button>
         </div>
@@ -947,6 +948,20 @@
           navMenu.classList.remove('active');
           mobileToggle.querySelector('i').className = 'fas fa-bars';
         });
+      });
+
+      // Language dropdown toggle
+      const langBtn = document.getElementById('langBtn');
+      const langDropdown = document.getElementById('langDropdown');
+      langBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        langDropdown.classList.toggle('show');
+      });
+      // Close dropdown when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
+          langDropdown.classList.remove('show');
+        }
       });
 
       // Language translations
@@ -1185,6 +1200,84 @@
           privacy: '隐私政策',
           terms: '服务条款',
         },
+        'zh-tw': {
+          stickyCta: '立即訂購',
+          navHome: '首頁',
+          navProducts: '產品',
+          navUniqueness: '獨特之處',
+          navTestimonials: '客戶評價',
+          navVision: '願景',
+          navTeam: '團隊',
+          heroTitle1: '創新',
+          heroTitleHighlight: '優質辣木',
+          heroTitle2: '印尼驕傲',
+          heroDesc: '將本地辣木提升到全球水平：健康、優雅、賦能農民。三種獨特配方，保留營養，獲得清真和BPOM認證。',
+          heroBtn: '探索系列',
+          trustTitle: '為什麼信任AUREVIA？',
+          halal: '清真',
+          bpom: 'BPOM RI',
+          organic: '有機',
+          pirt: 'PIRT',
+          trustNote: '*認證進行中，我們對品質和安全的承諾。',
+          testimonialsTitle: '他們怎麼說？',
+          testimonial1: '"AMARTA口感 creamy，不苦澀，非常適合早晨。我感覺更有活力！"',
+          testimonial1Name: '— Anita博士，營養師',
+          testimonial2: '"作為抹茶愛好者，ARKANA煙燻味非常獨特。這是一個認真的競爭對手！"',
+          testimonial2Name: '— Rizky，美食博主',
+          testimonial3: '"本地農民受益，產品優質。為使用AUREVIA感到自豪。"',
+          testimonial3Name: '— Siti，素食社區',
+          productsTitle: '系列 · 益處',
+          badgeGold: '黃金',
+          product1Desc: '奶油香草與初乳 — 增強免疫力。',
+          badgePure: '純',
+          product2Desc: '溫和辣木，100% A級辣木葉。',
+          badgeBlack: '黑',
+          product3Desc: '煙燻烤香 — 發酵與烘焙。',
+          uniquenessTitle: '創新與獨特',
+          usp1Title: '低溫脫水',
+          usp1Desc: '100%保留營養。',
+          usp2Title: '100%天然+甜菊糖',
+          usp2Desc: '無添加糖。',
+          usp3Title: '初乳（黃金系列）',
+          usp3Desc: '增強免疫力。',
+          usp4Title: '發酵與烘焙',
+          usp4Desc: '獨特的煙燻味。',
+          comparisonTitle: 'AUREVIA vs 其他',
+          comp1: '低溫脫水，初乳，無苦澀',
+          comp2Title: '進口抹茶',
+          comp2: '價格高，非本地',
+          comp3Title: '普通辣木',
+          comp3: '苦澀，包裝差',
+          compNote: '*基於市場認知和產品優勢。',
+          qualityTitle: 'AUREVIA品質之旅',
+          quality1Title: '精選農民',
+          quality1Desc: '與經驗豐富的本地農民合作，採用有機和環保種植方式。',
+          quality2Title: '品質控制',
+          quality2Desc: '每一片辣木葉都經過嚴格檢查，確保只有A級進入後續加工。',
+          quality3Title: '保鮮加工',
+          quality3Desc: '通過低溫脫水和可控發酵，保留全部營養和風味。',
+          quality4Title: '分銷',
+          quality4Desc: '產品以最高標準包裝和分銷，隨時陪伴您的健康生活方式。',
+          visionTitle: '願景與成長方向',
+          vision1Title: '持續創新',
+          vision1Desc: '不斷開發低溫脫水技術和新口味，滿足現代消費者需求。',
+          vision2Title: '農民合作',
+          vision2Desc: '通過公平的合作計畫和有機種植培訓賦能本地農民。',
+          vision3Title: '全球擴展',
+          vision3Desc: '將印尼優質辣木推向國際市場，同時保持品質和地方智慧。',
+          teamTitle: '優秀團隊',
+          ceo: '執行長',
+          coo: '營運長兼創始人',
+          clo: '法務長',
+          cco: '商務長',
+          finalCtaTitle: '準備好加入辣木革命了嗎？',
+          orderBtn: '立即訂購',
+          partnerBtn: '成為合作夥伴',
+          contactBtn: '聯繫我們',
+          footerBrand: 'AUREVIA — 印尼驕傲的優質辣木',
+          privacy: '隱私政策',
+          terms: '服務條款',
+        },
         ja: {
           stickyCta: '今すぐ注文',
           navHome: 'ホーム',
@@ -1345,7 +1438,7 @@
 
       // Function to switch language
       window.switchLanguage = function(lang) {
-        document.getElementById('currentLang').innerText = lang.toUpperCase();
+        document.getElementById('currentLang').innerText = lang === 'zh-tw' ? '繁' : (lang === 'zh' ? '简' : lang.toUpperCase());
         // Update all elements with data-i18n
         document.querySelectorAll('[data-i18n]').forEach(el => {
           const key = el.getAttribute('data-i18n');
@@ -1365,6 +1458,8 @@
         }
         // Store preference
         localStorage.setItem('preferredLanguage', lang);
+        // Close dropdown
+        langDropdown.classList.remove('show');
       };
 
       // Load saved language
