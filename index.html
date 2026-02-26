@@ -12,7 +12,10 @@
   <meta property="og:url" content="https://aurevia.id">
   <meta property="og:image" content="https://aurevia.id/og-image.jpg">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <!-- Font Awesome dengan fallback -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Fallback kedua jika CDN pertama gagal -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0-beta3/css/all.css">
   <style>
     * {
       margin: 0;
@@ -73,7 +76,7 @@
       text-align: right;
     }
 
-    /* ===== BACKGROUND SUPER DINAMIS ===== */
+    /* ===== BACKGROUND SUPER DINAMIS (tetap sama) ===== */
     .leaf-container {
       position: fixed;
       top: 0;
@@ -128,7 +131,6 @@
       100% { transform: translate(60px, -80px) scale(2); }
     }
 
-    /* Parallax hero leaf */
     .parallax-leaf {
       position: absolute;
       top: 10%;
@@ -297,7 +299,7 @@
       transition: 0.2s;
     }
 
-    /* Language selector */
+    /* Language selector - konsisten */
     .lang-selector {
       position: relative;
       margin: 0 0.75rem;
@@ -323,8 +325,9 @@
     }
     .lang-dropdown {
       position: absolute;
-      top: 120%;
-      right: 0;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
       background: var(--nav-bg);
       backdrop-filter: blur(15px);
       border: 1px solid var(--card-border);
@@ -343,7 +346,7 @@
       background: none;
       border: none;
       padding: 0.8rem 1rem;
-      text-align: left;
+      text-align: center;
       color: var(--text-primary);
       border-radius: 30px;
       cursor: pointer;
@@ -399,8 +402,9 @@
         margin: 0;
       }
       .lang-dropdown {
-        right: auto;
-        left: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        min-width: 140px;
       }
     }
 
@@ -748,7 +752,7 @@
       <a href="#tim" data-i18n="navTeam">Tim</a>
     </div>
     <div style="display: flex; gap: 1rem; align-items: center;">
-      <!-- Language Selector - toggle on click -->
+      <!-- Language Selector - konsisten center -->
       <div class="lang-selector">
         <button class="lang-btn" id="langToggle"><i class="fas fa-globe"></i> <span id="currentLang">ID</span></button>
         <div class="lang-dropdown" id="langDropdown">
@@ -1438,31 +1442,28 @@
 
       // Function to switch language
       window.switchLanguage = function(lang) {
-        document.getElementById('currentLang').innerText = lang === 'zh-CN' ? '简' : (lang === 'zh-TW' ? '繁' : lang.toUpperCase());
-        // Update all elements with data-i18n
+        let displayLang = lang;
+        if (lang === 'zh-CN') displayLang = '简';
+        else if (lang === 'zh-TW') displayLang = '繁';
+        else displayLang = lang.toUpperCase();
+        document.getElementById('currentLang').innerText = displayLang;
+
         document.querySelectorAll('[data-i18n]').forEach(el => {
           const key = el.getAttribute('data-i18n');
           if (translations[lang] && translations[lang][key]) {
-            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-              el.placeholder = translations[lang][key];
-            } else {
-              el.innerHTML = translations[lang][key];
-            }
+            el.innerHTML = translations[lang][key];
           }
         });
-        // Handle RTL for Arabic
+        // RTL for Arabic
         if (lang === 'ar') {
           body.classList.add('rtl');
         } else {
           body.classList.remove('rtl');
         }
-        // Store preference
         localStorage.setItem('preferredLanguage', lang);
-        // Close dropdown after selection
         document.getElementById('langDropdown').classList.remove('show');
       };
 
-      // Load saved language
       const savedLang = localStorage.getItem('preferredLanguage') || 'id';
       switchLanguage(savedLang);
 
@@ -1470,7 +1471,7 @@
       const leafContainer = document.getElementById('leafContainer');
       const leafIcons = ['fa-leaf', 'fa-seedling', 'fa-tree', 'fa-canadian-maple-leaf', 'fa-pagelines'];
       let leafCount = 0;
-      const MAX_LEAVES = 18;
+      const MAX_LEAVES = 15; // dikurangi sedikit untuk performa mobile
       function createLeaf() {
         if (leafCount >= MAX_LEAVES) return;
         leafCount++;
@@ -1487,24 +1488,24 @@
       }
       let lastLeaf = 0;
       function scheduleLeaf(timestamp) {
-        if (timestamp - lastLeaf > 1400) {
+        if (timestamp - lastLeaf > 1500) {
           createLeaf();
           lastLeaf = timestamp;
         }
         requestAnimationFrame(scheduleLeaf);
       }
       requestAnimationFrame(scheduleLeaf);
-      for (let i = 0; i < 10; i++) setTimeout(createLeaf, i * 180);
+      for (let i = 0; i < 8; i++) setTimeout(createLeaf, i * 200);
 
-      // Bokeh particles
+      // Bokeh particles (jumlah dikurangi untuk mobile)
       const bokehContainer = document.getElementById('bokehContainer');
-      for (let i = 0; i < 25; i++) {
+      for (let i = 0; i < 20; i++) {
         let span = document.createElement('span');
         span.style.left = Math.random() * 100 + '%';
         span.style.top = Math.random() * 100 + '%';
         span.style.animationDelay = Math.random() * 12 + 's';
         span.style.animationDuration = 15 + Math.random() * 25 + 's';
-        span.style.width = (4 + Math.random() * 10) + 'px';
+        span.style.width = (4 + Math.random() * 8) + 'px';
         span.style.height = span.style.width;
         bokehContainer.appendChild(span);
       }
@@ -1529,7 +1530,6 @@
         });
       });
 
-      // Force hero visible
       document.getElementById('home').classList.add('visible');
     })();
   </script>
