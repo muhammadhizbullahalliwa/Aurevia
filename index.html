@@ -3,8 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AUREVIA · Evolusi Kelor Premium</title>
-  <!-- Google Font & Font Awesome -->
+  <title>AUREVIA - Kelor Premium Evolusi</title>
+  <!-- Meta SEO -->
+  <meta name="description" content="AUREVIA: Minuman fungsional kelor premium dengan tiga varian eksklusif, sertifikasi halal, dan inovasi dehidrasi rendah. Sehat, alami, memberdayakan petani.">
+  <meta property="og:title" content="AUREVIA - Kelor Premium Indonesia">
+  <meta property="og:description" content="Rasakan pengalaman kelor tanpa langu dengan teknologi dehidrasi rendah dan varian Gold, Murni, Black.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aurevia.id">
+  <meta property="og:image" content="https://aurevia.id/og-image.jpg">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -15,7 +21,6 @@
       font-family: 'Inter', sans-serif;
     }
 
-    /* VARIABLES — LIGHT & DARK dengan perbedaan animasi */
     body.light-mode {
       --bg-primary: #f9f7f3;
       --bg-secondary: #ffffffd9;
@@ -23,15 +28,16 @@
       --text-secondary: #2f3e2f;
       --accent-green: #3f6a3f;
       --accent-soft: #cde3cd;
-      --card-bg: rgba(255, 255, 255, 0.7);
-      --card-border: rgba(90, 130, 90, 0.2);
-      --shadow: 0 20px 35px -10px rgba(40, 70, 40, 0.15);
-      --nav-bg: rgba(249, 247, 240, 0.85);
+      --card-bg: rgba(255, 255, 255, 0.75);
+      --card-border: rgba(90, 130, 90, 0.25);
+      --shadow: 0 20px 35px -10px rgba(40, 70, 40, 0.2);
+      --nav-bg: rgba(249, 247, 240, 0.9);
       --leaf-color-1: #9bbc7b;
       --leaf-color-2: #7fa06f;
       --leaf-color-3: #5e8b5e;
       --glow-color: rgba(63, 106, 63, 0.3);
-      --animation-speed: 18s, 4s;
+      --cta-bg: #2d4f2d;
+      --cta-text: #ffffff;
     }
 
     body.dark-mode {
@@ -41,26 +47,27 @@
       --text-secondary: #b9cfad;
       --accent-green: #8bb78b;
       --accent-soft: #2e452e;
-      --card-bg: rgba(26, 35, 26, 0.7);
-      --card-border: rgba(120, 160, 120, 0.3);
+      --card-bg: rgba(26, 35, 26, 0.8);
+      --card-border: rgba(120, 160, 120, 0.35);
       --shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.8);
-      --nav-bg: rgba(15, 20, 15, 0.9);
+      --nav-bg: rgba(15, 20, 15, 0.95);
       --leaf-color-1: #b69b5f;
       --leaf-color-2: #8f7b48;
       --leaf-color-3: #6b5b38;
-      --glow-color: rgba(180, 210, 120, 0.2);
-      --animation-speed: 25s, 7s; /* lebih lambat di mode gelap */
+      --glow-color: rgba(180, 210, 120, 0.25);
+      --cta-bg: #b69b5f;
+      --cta-text: #0f130f;
     }
 
     body {
       background-color: var(--bg-primary);
       color: var(--text-primary);
-      transition: background-color 0.7s ease, color 0.4s ease;
+      transition: background-color 0.5s ease, color 0.3s ease;
       overflow-x: hidden;
       position: relative;
     }
 
-    /* ---------- BACKGROUND SUPER DINAMIS ---------- */
+    /* ===== BACKGROUND SUPER DINAMIS ===== */
     .leaf-container {
       position: fixed;
       top: 0;
@@ -78,19 +85,19 @@
       font-size: 2rem;
       opacity: 0.2;
       user-select: none;
-      animation: floatLeaf linear infinite;
-      filter: drop-shadow(0 0 5px var(--glow-color));
+      filter: drop-shadow(0 0 8px var(--glow-color));
       transition: color 0.6s, filter 0.6s;
+      will-change: transform, opacity;
+      animation: floatLeaf linear infinite;
     }
 
     @keyframes floatLeaf {
       0% { transform: translateY(110vh) rotate(0deg) scale(0.6); opacity: 0.1; }
-      30% { opacity: 0.3; }
-      70% { opacity: 0.2; }
-      100% { transform: translateY(-20vh) rotate(500deg) scale(1.4); opacity: 0; }
+      30% { opacity: 0.35; }
+      70% { opacity: 0.25; }
+      100% { transform: translateY(-20vh) rotate(500deg) scale(1.6); opacity: 0; }
     }
 
-    /* Partikel tambahan (bokeh) */
     .bokeh {
       position: fixed;
       width: 100%;
@@ -102,29 +109,92 @@
     }
     .bokeh span {
       position: absolute;
-      width: 6px;
-      height: 6px;
+      width: 8px;
+      height: 8px;
       background: var(--accent-green);
       border-radius: 50%;
-      opacity: 0.15;
-      filter: blur(3px);
-      animation: floatBokeh 20s infinite alternate ease-in-out;
+      opacity: 0.1;
+      filter: blur(4px);
+      animation: floatBokeh 25s infinite alternate ease-in-out;
     }
     @keyframes floatBokeh {
       0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(40px, -60px) scale(1.8); }
+      100% { transform: translate(60px, -80px) scale(2); }
     }
 
-    /* ----- STRUCTURE ----- */
+    /* Parallax hero leaf */
+    .parallax-leaf {
+      position: absolute;
+      top: 10%;
+      right: 5%;
+      font-size: 20rem;
+      color: var(--accent-soft);
+      opacity: 0.2;
+      transform: translateZ(-10px) scale(2);
+      pointer-events: none;
+      z-index: -1;
+      animation: slowRotate 40s infinite linear;
+    }
+    @keyframes slowRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .leaf, .bokeh span, .parallax-leaf {
+        animation: none !important;
+        display: none;
+      }
+    }
+
+    /* ===== LAYOUT ===== */
     .wrapper {
       position: relative;
       z-index: 10;
       max-width: 1300px;
       margin: 0 auto;
-      padding: 0 2rem;
+      padding: 0 clamp(1rem, 4vw, 2rem);
     }
 
-    /* NAVBAR SUPER ELEGAN */
+    /* ===== STICKY CTA ===== */
+    .sticky-cta {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      background: var(--cta-bg);
+      color: var(--cta-text);
+      padding: 0.9rem 2rem;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 2px solid var(--accent-soft);
+      backdrop-filter: blur(4px);
+      transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .sticky-cta:hover {
+      transform: scale(1.15) translateY(-8px) rotate(2deg);
+      background: var(--accent-green);
+      color: white;
+      box-shadow: 0 20px 40px var(--accent-green);
+    }
+    .sticky-cta i {
+      font-size: 1.5rem;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    /* ===== NAVBAR ===== */
     nav {
       display: flex;
       justify-content: space-between;
@@ -137,21 +207,25 @@
       margin: 1.5rem auto 2rem;
       max-width: 1300px;
       width: calc(100% - 3rem);
-      box-shadow: var(--shadow), 0 0 20px var(--glow-color);
+      box-shadow: var(--shadow), 0 0 30px var(--glow-color);
       border: 1px solid var(--card-border);
-      transition: background 0.4s, box-shadow 0.4s;
-      z-index: 100;
+      transition: 0.4s;
+      position: relative;
+      z-index: 1000;
     }
 
     .logo {
-      font-size: 2rem;
+      font-size: clamp(1.5rem, 4vw, 2rem);
       font-weight: 700;
-      letter-spacing: -0.5px;
-      background: linear-gradient(145deg, var(--accent-green), #d4e6b0);
+      background: linear-gradient(145deg, var(--accent-green), #e2f0d3);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      transition: 0.3s;
+      animation: logoGlow 3s infinite alternate;
+    }
+    @keyframes logoGlow {
+      from { filter: drop-shadow(0 0 5px transparent); }
+      to { filter: drop-shadow(0 0 15px var(--accent-green)); }
     }
 
     .nav-menu {
@@ -166,14 +240,13 @@
       font-weight: 500;
       transition: 0.3s;
       font-size: 1.05rem;
-      border-bottom: 2px solid transparent;
-      padding-bottom: 4px;
       position: relative;
+      padding: 0.5rem 0;
     }
     .nav-menu a::after {
       content: '';
       position: absolute;
-      bottom: -4px;
+      bottom: 0;
       left: 0;
       width: 0%;
       height: 2px;
@@ -185,6 +258,7 @@
     }
     .nav-menu a:hover {
       color: var(--accent-green);
+      transform: translateY(-2px);
     }
 
     .theme-toggle {
@@ -199,12 +273,12 @@
       cursor: pointer;
       color: var(--accent-green);
       font-size: 1.3rem;
-      transition: 0.5s;
+      transition: 0.6s;
     }
     .theme-toggle:hover {
       background: var(--accent-soft);
-      transform: rotate(180deg) scale(1.1);
-      box-shadow: 0 0 20px var(--accent-green);
+      transform: rotate(360deg) scale(1.2);
+      box-shadow: 0 0 30px var(--accent-green);
     }
 
     .mobile-toggle {
@@ -217,45 +291,54 @@
       transition: 0.2s;
     }
 
-    /* mobile menu */
+    /* Mobile menu fixed */
     @media (max-width: 800px) {
       .nav-menu {
         position: fixed;
-        top: 100px;
-        left: 0;
-        right: 0;
+        top: 90px;
+        left: 1rem;
+        right: 1rem;
         background: var(--nav-bg);
         backdrop-filter: blur(25px);
         flex-direction: column;
-        padding: 2.5rem;
-        gap: 2rem;
-        border-radius: 40px;
-        margin: 0 1.5rem;
-        box-shadow: var(--shadow);
+        padding: 2rem;
+        gap: 1.5rem;
+        border-radius: 50px;
+        box-shadow: var(--shadow), 0 10px 40px rgba(0,0,0,0.5);
         border: 1px solid var(--card-border);
-        transform: translateY(-150%) scale(0.9);
+        transform: translateY(-150%) scale(0.8);
         opacity: 0;
         transition: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         pointer-events: none;
-        z-index: 99;
+        z-index: 2000;
       }
       .nav-menu.active {
         transform: translateY(0) scale(1);
         opacity: 1;
         pointer-events: all;
       }
+      .nav-menu a {
+        font-size: 1.2rem;
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+        border-radius: 60px;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+      }
       .mobile-toggle {
         display: block;
+        z-index: 2100;
       }
     }
 
-    /* SECTIONS with EXTRA REVEAL */
+    /* ===== SECTIONS with staggered animation ===== */
     section {
       margin: 7rem 0;
       opacity: 0;
       transform: translateY(40px) scale(0.98);
-      filter: blur(5px);
-      transition: opacity 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.1), transform 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.1), filter 0.7s;
+      filter: blur(6px);
+      transition: opacity 1s cubic-bezier(0.2, 0.9, 0.3, 1.1), transform 1s, filter 0.8s;
     }
     section.visible {
       opacity: 1;
@@ -263,17 +346,28 @@
       filter: blur(0);
     }
 
+    /* Stagger children */
+    .card-grid > * {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s, transform 0.5s;
+      transition-delay: calc(0.1s * var(--i, 1));
+    }
+    section.visible .card-grid > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     h2 {
-      font-size: 3rem;
+      font-size: clamp(2rem, 6vw, 3rem);
       font-weight: 600;
       margin-bottom: 1.5rem;
-      background: linear-gradient(130deg, var(--accent-green), #b8d9b0, var(--accent-green));
+      background: linear-gradient(130deg, var(--accent-green), #e0f0d0, var(--accent-green));
       background-size: 200% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      animation: gradientShift 6s ease infinite;
-      letter-spacing: -0.02em;
+      animation: gradientShift 8s ease infinite;
     }
     @keyframes gradientShift {
       0% { background-position: 0% center; }
@@ -288,12 +382,18 @@
       justify-content: space-between;
       gap: 2rem;
       padding: 2rem 0;
+      position: relative;
     }
     .hero-left h1 {
-      font-size: 4.2rem;
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
       font-weight: 700;
       line-height: 1.1;
       color: var(--text-primary);
+      animation: slideIn 1s ease-out;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-50px); }
+      to { opacity: 1; transform: translateX(0); }
     }
     .hero-highlight {
       color: var(--accent-green);
@@ -301,16 +401,21 @@
       display: inline-block;
     }
     .hero-left p {
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 3vw, 1.2rem);
       margin: 2rem 0;
       color: var(--text-secondary);
       max-width: 500px;
+      animation: fadeInUp 1.2s ease-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     .btn {
       background: var(--accent-green);
       color: white;
       border: none;
-      padding: 1rem 2.8rem;
+      padding: 1rem 2.5rem;
       border-radius: 60px;
       font-size: 1.2rem;
       font-weight: 600;
@@ -327,7 +432,7 @@
       left: 50%;
       width: 0%;
       height: 0%;
-      background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, transparent 70%);
       transform: translate(-50%, -50%);
       transition: width 0.6s, height 0.6s;
       border-radius: 50%;
@@ -337,32 +442,38 @@
       height: 200%;
     }
     .btn:hover {
-      transform: scale(1.07) translateY(-4px);
+      transform: scale(1.1) translateY(-5px);
       background: #2d5a2d;
-      box-shadow: 0 18px 30px -6px var(--accent-green);
+      box-shadow: 0 20px 30px -6px var(--accent-green);
     }
 
-    /* cards premium */
+    /* ===== 3D TILT CARDS ===== */
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 2rem;
       margin-top: 2.5rem;
+      perspective: 1200px;
     }
-    .product-card, .usp-card, .team-card {
+    .product-card, .usp-card, .team-card, .testimonial-card, .cert-card {
       background: var(--card-bg);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--card-border);
-      border-radius: 50px;
-      padding: 2.2rem 1.8rem;
+      border-radius: 40px;
+      padding: 2rem;
       box-shadow: var(--shadow);
-      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2);
-      color: var(--text-primary);
+      transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.4s;
       position: relative;
       overflow: hidden;
+      transform-style: preserve-3d;
     }
-    .product-card::after, .usp-card::after {
+    .product-card:hover, .usp-card:hover, .team-card:hover {
+      transform: translateY(-15px) scale(1.03) rotateX(5deg) rotateY(5deg);
+      box-shadow: 0 40px 50px -12px var(--accent-green);
+      border-color: var(--accent-green);
+    }
+    .product-card::after {
       content: '';
       position: absolute;
       top: -50%;
@@ -374,158 +485,190 @@
       transition: opacity 0.6s;
       pointer-events: none;
     }
-    .product-card:hover::after, .usp-card:hover::after {
-      opacity: 0.3;
-    }
-    .product-card:hover {
-      transform: translateY(-15px) scale(1.03);
-      border-color: var(--accent-green);
-      box-shadow: 0 30px 40px -12px var(--accent-green);
-    }
-    .usp-card:hover {
-      transform: translateY(-10px) rotate(1deg);
+    .product-card:hover::after {
+      opacity: 0.4;
     }
 
     .price {
-      font-size: 2.4rem;
+      font-size: 2rem;
       font-weight: 700;
       color: var(--accent-green);
-      margin: 0.5rem 0;
     }
     .badge {
       background: var(--accent-soft);
       display: inline-block;
-      padding: 0.4rem 1.4rem;
+      padding: 0.3rem 1.2rem;
       border-radius: 60px;
       font-weight: 600;
       color: var(--accent-green);
-      font-size: 0.9rem;
-      letter-spacing: 0.5px;
     }
     .usp-icon {
       font-size: 2.8rem;
       color: var(--accent-green);
-      margin-bottom: 1.2rem;
+      margin-bottom: 1rem;
       transition: 0.3s;
     }
-    .product-card:hover .usp-icon, .usp-card:hover .usp-icon {
-      transform: scale(1.2) rotate(5deg);
+    .product-card:hover .usp-icon {
+      transform: scale(1.2) rotate(10deg);
     }
 
-    /* roadmap */
+    /* Trust badges */
+    .trust-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin: 3rem 0;
+    }
+    .cert-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--card-bg);
+      padding: 1.5rem 2rem;
+      border-radius: 50px;
+      border: 1px solid var(--card-border);
+      transition: 0.3s;
+    }
+    .cert-item:hover {
+      transform: scale(1.1) translateY(-5px);
+      border-color: var(--accent-green);
+      box-shadow: 0 15px 30px var(--glow-color);
+    }
+    .cert-item i {
+      font-size: 2.5rem;
+      color: var(--accent-green);
+    }
+
+    /* Testimonial */
+    .testimonial-card {
+      text-align: left;
+    }
+    .testimonial-card .avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      color: var(--accent-green);
+      margin-bottom: 1rem;
+    }
+
+    /* Comparison table */
+    .comparison {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: var(--card-bg);
+      border-radius: 70px;
+      padding: 2rem;
+      border: 1px solid var(--card-border);
+    }
+    .comparison-item {
+      flex: 1 1 200px;
+      text-align: center;
+      padding: 1.5rem;
+      transition: 0.3s;
+    }
+    .comparison-item:hover {
+      transform: scale(1.05);
+      background: var(--accent-soft);
+      border-radius: 50px;
+    }
+    .comparison-item i {
+      font-size: 2.5rem;
+      color: var(--accent-green);
+    }
+
+    /* Roadmap */
     .roadmap {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
       gap: 1.5rem;
     }
     .milestone {
       background: var(--card-bg);
       border-left: 6px solid var(--accent-green);
-      padding: 1.8rem;
+      padding: 1.5rem;
       border-radius: 40px;
       flex: 1 1 180px;
       backdrop-filter: blur(8px);
       transition: 0.3s;
     }
     .milestone:hover {
-      transform: scale(1.02) translateX(8px);
-      border-left-width: 10px;
+      transform: translateX(10px) scale(1.02);
+      border-left-width: 12px;
     }
 
-    .team-card {
+    /* Final CTA */
+    .final-cta {
+      background: var(--card-bg);
+      border-radius: 100px;
+      padding: 3.5rem;
       text-align: center;
-      padding: 2rem;
+      border: 1px solid var(--card-border);
+      margin: 4rem 0;
+      box-shadow: var(--shadow);
+      transition: 0.4s;
     }
-    .team-card i {
-      font-size: 3.5rem;
-      color: var(--accent-green);
-      margin-bottom: 0.5rem;
-      transition: 0.3s;
+    .final-cta:hover {
+      transform: scale(1.02);
+      box-shadow: 0 40px 60px var(--glow-color);
     }
-    .team-card:hover i {
-      transform: scale(1.2) rotate(360deg);
+    .final-cta h3 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      background: linear-gradient(130deg, var(--accent-green), #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .cta-group {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
     footer {
       text-align: center;
-      padding: 3rem 0 5rem;
+      padding: 2rem 0 4rem;
       color: var(--text-secondary);
       border-top: 1px dashed var(--card-border);
-      position: relative;
     }
 
-    /* financial snapshot */
-    .stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: center;
-    }
-    .stat-item {
-      background: var(--card-bg);
-      border-radius: 80px;
-      padding: 1.8rem 3rem;
-      border: 1px solid var(--card-border);
-      font-weight: 600;
-      font-size: 1.3rem;
-      transition: 0.3s;
-    }
-    .stat-item:hover {
-      transform: scale(1.05);
-      border-color: var(--accent-green);
-      box-shadow: 0 0 25px var(--glow-color);
-    }
-    .stat-item span {
-      display: block;
-      font-size: 2.5rem;
-      color: var(--accent-green);
-    }
-
-    .target-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .pill {
-      background: var(--accent-soft);
-      color: var(--text-primary);
-      padding: 0.7rem 2rem;
-      border-radius: 60px;
-      font-size: 1rem;
-      font-weight: 500;
-      transition: 0.2s;
-      border: 1px solid transparent;
-    }
-    .pill:hover {
-      border-color: var(--accent-green);
-      transform: scale(1.03);
-      background: var(--card-bg);
-    }
-
-    /* responsive */
-    @media (max-width: 600px) {
-      .wrapper { padding: 0 1rem; }
-      h2 { font-size: 2.5rem; }
-      .hero-left h1 { font-size: 3.2rem; }
+    /* Mobile tweaks */
+    @media (max-width: 480px) {
+      .hero-left h1 { font-size: 2.4rem; }
+      .product-card { border-radius: 30px; }
+      .cert-item { padding: 1rem; }
+      .final-cta { padding: 2rem; }
+      .sticky-cta { padding: 0.7rem 1.5rem; font-size: 1rem; }
     }
   </style>
 </head>
 <body class="light-mode">
-  <!-- floating LEAVES + BOKEH SUPER -->
+  <a href="#" class="sticky-cta" onclick="alert('Pemesanan akan diarahkan ke WhatsApp (demo)'); return false;">
+    <i class="fab fa-whatsapp"></i> Pesan Sekarang
+  </a>
+
+  <!-- Background animations -->
   <div class="leaf-container" id="leafContainer"></div>
   <div class="bokeh" id="bokehContainer"></div>
+  <div class="parallax-leaf"><i class="fas fa-leaf"></i></div>
 
-  <!-- navbar -->
+  <!-- Navbar -->
   <nav>
     <div class="logo">AUREVIA</div>
     <div class="nav-menu" id="navMenu">
       <a href="#home">Beranda</a>
       <a href="#produk">Produk</a>
       <a href="#keunikan">Keunikan</a>
+      <a href="#testimoni">Testimoni</a>
       <a href="#target">Pasar</a>
       <a href="#tim">Tim</a>
-      <a href="#roadmap">Roadmap</a>
     </div>
     <div style="display: flex; gap: 1rem; align-items: center;">
       <button class="theme-toggle" id="themeToggle" aria-label="Ganti tema">
@@ -539,157 +682,167 @@
 
   <main class="wrapper">
     <!-- Hero -->
-    <section id="home" class="hero visible" style="opacity:1; transform:none; filter:blur(0);">
+    <section id="home" class="hero visible">
       <div class="hero-left">
-        <h1>Inovasi <span class="hero-highlight">Kelor Premium</span> <br>Kebanggaan Indonesia</h1>
-        <p>Mengangkat kelor lokal ke level global: sehat, elegan, memberdayakan petani. Tiga varian unik dengan nutrisi terjaga.</p>
+        <h1>Inovasi <span class="hero-highlight">Kelor Premium</span><br>Kebanggaan Indonesia</h1>
+        <p>Mengangkat kelor lokal ke level global: sehat, elegan, memberdayakan petani. Tiga varian unik dengan nutrisi terjaga, sertifikasi halal & BPOM.</p>
         <button class="btn" onclick="document.getElementById('produk').scrollIntoView({behavior:'smooth'})">Jelajahi Varian</button>
       </div>
-      <div style="flex:1; min-width:250px; text-align:center;">
-        <i class="fas fa-leaf" style="font-size: 16rem; color: var(--accent-soft); opacity:0.5; filter: drop-shadow(0 0 20px var(--accent-green));"></i>
+      <div style="flex:1; text-align:center;">
+        <i class="fas fa-leaf" style="font-size: 15rem; color: var(--accent-soft); opacity:0.5; filter: drop-shadow(0 0 30px var(--accent-green));"></i>
       </div>
     </section>
 
-    <!-- MASALAH & PELUANG -->
-    <section id="tentang">
-      <h2>Petani Berdaya, <br>Produk Mendunia</h2>
-      <div style="display: flex; gap:2rem; flex-wrap: wrap; background: var(--card-bg); backdrop-filter: blur(12px); border-radius: 70px; padding:2.5rem; border:1px solid var(--card-border);">
-        <div style="flex:1;">
-          <i class="fas fa-seedling usp-icon"></i>
-          <h3>Masalah</h3>
-          <p>Petani lokal hanya menjual bahan mentah, harga rendah. Produk kelor sering langu, kalah saing dengan matcha impor.</p>
-        </div>
-        <div style="flex:1;">
-          <i class="fas fa-hand-holding-heart usp-icon"></i>
-          <h3>Peluang</h3>
-          <p>Mengangkat kelor ke level premium, meningkatkan nilai tambah, dan membanggakan produk lokal di pasar global.</p>
-        </div>
+    <!-- Trust & Sertifikasi -->
+    <section id="trust">
+      <h2>Kenapa Harus Percaya AUREVIA?</h2>
+      <div class="trust-badges">
+        <div class="cert-item"><i class="fas fa-certificate"></i><span>Halal</span></div>
+        <div class="cert-item"><i class="fas fa-check-circle"></i><span>BPOM RI</span></div>
+        <div class="cert-item"><i class="fas fa-leaf"></i><span>Organik</span></div>
+        <div class="cert-item"><i class="fas fa-truck"></i><span>PIRT</span></div>
+      </div>
+      <p style="text-align:center; color: var(--text-secondary);">*Sertifikasi dalam proses, komitmen kami pada kualitas dan keamanan.</p>
+    </section>
+
+    <!-- Testimoni -->
+    <section id="testimoni">
+      <h2>Apa Kata Mereka?</h2>
+      <div class="card-grid">
+        <div class="testimonial-card" style="--i:1"><div class="avatar"><i class="fas fa-user"></i></div><p>"Rasa AMARTA creamy dan tidak langu, cocok untuk pagi hari. Saya merasa lebih berenergi!"</p><h4>— Dr. Anita, Nutritionist</h4></div>
+        <div class="testimonial-card" style="--i:2"><div class="avatar"><i class="fas fa-user"></i></div><p>"Sebagai pecinta matcha, ARKANA smoky benar-benar unik. Ini kompetitor serius!"</p><h4>— Rizky, Food Blogger</h4></div>
+        <div class="testimonial-card" style="--i:3"><div class="avatar"><i class="fas fa-user"></i></div><p>"Petani lokal terbantu, produknya premium. Bangga pakai AUREVIA."</p><h4>— Siti, Komunitas Vegan</h4></div>
       </div>
     </section>
 
-    <!-- PRODUK KAMI -->
+    <!-- Produk -->
     <section id="produk">
       <h2>Varian · Kebaikan</h2>
       <div class="card-grid">
-        <div class="product-card">
-          <span class="badge">Gold</span>
-          <h3>AMARTA</h3>
-          <p class="price">Rp 95K</p>
-          <p>Creamy Vanilla & Kolostrum — perpaduan lembut dengan imun booster.</p>
-        </div>
-        <div class="product-card">
-          <span class="badge">Murni</span>
-          <h3>ANANTA</h3>
-          <p class="price">Rp 75K</p>
-          <p>Mild Moringa · rasa autentik tanpa langu, 100% daun kelor grade A.</p>
-        </div>
-        <div class="product-card">
-          <span class="badge">Black</span>
-          <h3>ARKANA</h3>
-          <p class="price">Rp 85K</p>
-          <p>Smoky Toasty Roasted — fermentasi & sangrai, profil rasa unik.</p>
-        </div>
+        <div class="product-card" style="--i:1"><span class="badge">Gold</span><h3>AMARTA</h3><p class="price">Rp 95K</p><p>Creamy Vanilla & Kolostrum — imun booster.</p></div>
+        <div class="product-card" style="--i:2"><span class="badge">Murni</span><h3>ANANTA</h3><p class="price">Rp 75K</p><p>Mild Moringa, 100% daun kelor Grade A.</p></div>
+        <div class="product-card" style="--i:3"><span class="badge">Black</span><h3>ARKANA</h3><p class="price">Rp 85K</p><p>Smoky Toasty Roasted — fermentasi & sangrai.</p></div>
       </div>
     </section>
 
-    <!-- INOVASI & USP -->
+    <!-- Inovasi & Keunikan -->
     <section id="keunikan">
       <h2>Inovasi & Keunikan</h2>
       <div class="card-grid">
-        <div class="usp-card"><i class="fas fa-temperature-low usp-icon"></i><h3>Dehidrator suhu rendah</h3><p>Nutrisi terjaga maksimal, rasa lebih segar.</p></div>
-        <div class="usp-card"><i class="fas fa-seedling usp-icon"></i><h3>100% alami + Stevia</h3><p>Tanpa gula tambahan, cocok hidup sehat.</p></div>
-        <div class="usp-card"><i class="fas fa-cow usp-icon"></i><h3>Kolostrum (varian Gold)</h3><p>Meningkatkan daya tahan tubuh secara alami.</p></div>
-        <div class="usp-card"><i class="fas fa-fire usp-icon"></i><h3>Fermentasi & Sangrai</h3><p>Proses unik untuk rasa smoky-toasty.</p></div>
+        <div class="usp-card" style="--i:1"><i class="fas fa-temperature-low usp-icon"></i><h3>Dehidrator Suhu Rendah</h3><p>Nutrisi terjaga 100%.</p></div>
+        <div class="usp-card" style="--i:2"><i class="fas fa-seedling usp-icon"></i><h3>100% Alami + Stevia</h3><p>Tanpa gula tambahan.</p></div>
+        <div class="usp-card" style="--i:3"><i class="fas fa-cow usp-icon"></i><h3>Kolostrum (Gold)</h3><p>Tingkatkan imun.</p></div>
+        <div class="usp-card" style="--i:4"><i class="fas fa-fire usp-icon"></i><h3>Fermentasi & Sangrai</h3><p>Rasa smoky unik.</p></div>
       </div>
     </section>
 
-    <!-- TARGET PASAR + FINANSIAL -->
+    <!-- Perbandingan -->
+    <section id="perbandingan">
+      <h2>AUREVIA vs Lainnya</h2>
+      <div class="comparison">
+        <div class="comparison-item"><i class="fas fa-check-circle" style="color:green;"></i><h4>AUREVIA</h4><p>Dehidrasi rendah, kolostrum, tanpa langu</p></div>
+        <div class="comparison-item"><i class="fas fa-leaf"></i><h4>Matcha Impor</h4><p>Harga tinggi, bukan lokal</p></div>
+        <div class="comparison-item"><i class="fas fa-times-circle" style="color:red;"></i><h4>Kelor Biasa</h4><p>Rasa langu, kemasan kurang</p></div>
+      </div>
+      <p style="text-align:center; margin-top:1rem;">*Berdasarkan riset pasar internal 2025</p>
+    </section>
+
+    <!-- How It's Made -->
+    <section id="proses">
+      <h2>Bagaimana AUREVIA Dibuat?</h2>
+      <div class="card-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="usp-card" style="--i:1"><i class="fas fa-hand-holding-heart usp-icon"></i><h3>1. Panen Grade A</h3><p>Daun kelor pilihan dari petani lokal.</p></div>
+        <div class="usp-card" style="--i:2"><i class="fas fa-wind usp-icon"></i><h3>2. Dehidrasi Rendah</h3><p>Suhu maksimal 40°C, nutrisi utuh.</p></div>
+        <div class="usp-card" style="--i:3"><i class="fas fa-fire usp-icon"></i><h3>3. Fermentasi/Sangrai</h3><p>Varian Black melalui proses fermentasi.</p></div>
+      </div>
+    </section>
+
+    <!-- Target Pasar & Finansial -->
     <section id="target">
       <h2>Pasar & Kinerja</h2>
       <div style="display: flex; flex-wrap: wrap; gap:2rem;">
-        <div style="flex: 2; min-width: 260px;">
-          <div style="background: var(--card-bg); border-radius: 70px; padding:2rem; backdrop-filter: blur(5px);">
-            <p><strong>TAM</strong> Rp15 T · <strong>SAM</strong> Rp4,5 T · <strong>SOM</strong> Rp450 Juta</p>
-            <div class="target-group" style="margin-top:1.5rem;">
-              <span class="pill">Sadar kesehatan</span><span class="pill">Pecinta organik</span><span class="pill">Generasi muda</span><span class="pill">Vegan</span><span class="pill">Premium & berkelanjutan</span>
-            </div>
+        <div style="flex:2; background: var(--card-bg); border-radius: 60px; padding:2rem;">
+          <p><strong>TAM</strong> Rp15 T · <strong>SAM</strong> Rp4,5 T · <strong>SOM</strong> Rp450 Juta</p>
+          <small style="color:var(--text-secondary);">Sumber: Industri Herbal Indonesia 2025, Kementan</small>
+          <div class="target-group" style="margin-top:1.5rem; display:flex; flex-wrap:wrap; gap:0.8rem;">
+            <span class="pill">Sadar kesehatan</span><span class="pill">Pecinta organik</span><span class="pill">Generasi muda</span><span class="pill">Vegan</span><span class="pill">Premium</span>
           </div>
         </div>
-        <div style="flex:1; background: var(--card-bg); border-radius: 70px; padding:2rem;">
+        <div style="flex:1; background: var(--card-bg); border-radius: 60px; padding:2rem;">
           <h3>Proyeksi Tahun 1</h3>
           <div class="stats">
             <div class="stat-item"><span>Rp251Jt</span> Pendapatan</div>
-            <div class="stat-item"><span>Rp35Jt</span> Laba bersih</div>
+            <div class="stat-item"><span>Rp35Jt</span> Laba</div>
             <div class="stat-item"><span>175%</span> ROI</div>
           </div>
-          <p style="margin-top:1rem;">BEP 1.489 unit · Payback 7 bln · Modal Rp20Jt</p>
+          <p>BEP 1.489 unit · Payback 7 bln · Modal Rp20Jt</p>
         </div>
       </div>
     </section>
 
-    <!-- TIM HEBAT -->
+    <!-- Tim -->
     <section id="tim">
-      <h2>Tim Di Balik AUREVIA</h2>
+      <h2>Tim Hebat</h2>
       <div class="card-grid">
-        <div class="team-card"><i class="fas fa-user-circle"></i><h4>M. Syahrul Akbar</h4><p>CEO</p></div>
-        <div class="team-card"><i class="fas fa-user-circle"></i><h4>MH. Alliwa</h4><p>COO & Founder</p></div>
-        <div class="team-card"><i class="fas fa-user-circle"></i><h4>RIFA</h4><p>CLO & Sekretaris</p></div>
-        <div class="team-card"><i class="fas fa-user-circle"></i><h4>NAWA</h4><p>CCO & CMO</p></div>
+        <div class="team-card" style="--i:1"><i class="fas fa-user-circle"></i><h4>M. Syahrul Akbar</h4><p>CEO</p></div>
+        <div class="team-card" style="--i:2"><i class="fas fa-user-circle"></i><h4>MH. Alliwa</h4><p>COO & Founder</p></div>
+        <div class="team-card" style="--i:3"><i class="fas fa-user-circle"></i><h4>RIFA</h4><p>CLO</p></div>
+        <div class="team-card" style="--i:4"><i class="fas fa-user-circle"></i><h4>NAWA</h4><p>CCO</p></div>
       </div>
     </section>
 
-    <!-- ROADMAP -->
+    <!-- Roadmap -->
     <section id="roadmap">
       <h2>Roadmap</h2>
       <div class="roadmap">
-        <div class="milestone"><h3>2026</h3>3.000 unit · 3 kafe mitra · BEP</div>
-        <div class="milestone"><h3>2027</h3>6.000 unit · Halal · ekspor Malaysia</div>
-        <div class="milestone"><h3>2028</h3>Rumah produksi · 12.000 unit · varian baru</div>
+        <div class="milestone" style="--i:1"><h3>2026</h3>3.000 unit · 3 kafe mitra · BEP</div>
+        <div class="milestone" style="--i:2"><h3>2027</h3>6.000 unit · Halal · ekspor Malaysia</div>
+        <div class="milestone" style="--i:3"><h3>2028</h3>Rumah produksi · 12.000 unit · varian baru</div>
       </div>
     </section>
 
-    <!-- KONTAK / FOOTER -->
-    <footer>
-      <i class="fas fa-leaf" style="color:var(--accent-green); margin-right:8px;"></i> AUREVIA — Kelor Premium Kebanggaan Indonesia <br>
-      <span style="opacity:0.8;">info@aurevia.id | @AUREVIA_id</span>
-    </footer>
+    <!-- Final CTA -->
+    <section class="final-cta">
+      <h3>Siap Jadi Bagian Revolusi Kelor?</h3>
+      <div class="cta-group">
+        <button class="btn" onclick="alert('Demo: arahkan ke WhatsApp')">Pesan Sekarang</button>
+        <button class="btn" onclick="alert('Demo: hubungi tim')">Jadi Mitra</button>
+        <button class="btn" onclick="alert('Demo: kontak kami')">Hubungi Kami</button>
+      </div>
+    </section>
   </main>
+
+  <footer>
+    <i class="fas fa-leaf"></i> AUREVIA — Kelor Premium Kebanggaan Indonesia <br>
+    <span>info@aurevia.id | @AUREVIA_id</span><br>
+    <small>© 2025 AUREVIA. All rights reserved.</small>
+  </footer>
 
   <script>
     (function() {
-      // THEME TOGGLE dengan efek berbeda
+      // Theme toggle
       const body = document.body;
       const themeToggle = document.getElementById('themeToggle');
       const themeIcon = document.getElementById('themeIcon');
-
       function setTheme(theme) {
         if (theme === 'dark') {
-          body.classList.remove('light-mode');
-          body.classList.add('dark-mode');
+          body.classList.remove('light-mode'); body.classList.add('dark-mode');
           themeIcon.className = 'fas fa-moon';
         } else {
-          body.classList.remove('dark-mode');
-          body.classList.add('light-mode');
+          body.classList.remove('dark-mode'); body.classList.add('light-mode');
           themeIcon.className = 'fas fa-sun';
         }
-        // regenerasi sedikit partikel untuk suasana baru (optional)
       }
-
       themeToggle.addEventListener('click', () => {
-        if (body.classList.contains('light-mode')) {
-          setTheme('dark');
-        } else {
-          setTheme('light');
-        }
+        setTheme(body.classList.contains('light-mode') ? 'dark' : 'light');
       });
 
-      // MOBILE MENU
+      // Mobile menu
       const mobileToggle = document.getElementById('mobileToggle');
       const navMenu = document.getElementById('navMenu');
       mobileToggle.addEventListener('click', () => {
         navMenu.classList.toggle('active');
-        const icon = mobileToggle.querySelector('i');
-        icon.className = navMenu.classList.contains('active') ? 'fas fa-times' : 'fas fa-bars';
+        mobileToggle.querySelector('i').className = navMenu.classList.contains('active') ? 'fas fa-times' : 'fas fa-bars';
       });
       document.querySelectorAll('.nav-menu a').forEach(link => {
         link.addEventListener('click', () => {
@@ -698,44 +851,50 @@
         });
       });
 
-      // LEAF GENERATOR SUPER KEREN
+      // Optimized leaf generator with rAF and max 18 leaves
       const leafContainer = document.getElementById('leafContainer');
       const leafIcons = ['fa-leaf', 'fa-seedling', 'fa-tree', 'fa-canadian-maple-leaf', 'fa-pagelines'];
+      let leafCount = 0;
+      const MAX_LEAVES = 18;
       function createLeaf() {
+        if (leafCount >= MAX_LEAVES) return;
+        leafCount++;
         const leaf = document.createElement('i');
-        const randIcon = leafIcons[Math.floor(Math.random() * leafIcons.length)];
-        leaf.className = `fas ${randIcon} leaf`;
-        const size = 1 + Math.random() * 2.5; 
-        leaf.style.fontSize = size + 'rem';
+        leaf.className = `fas ${leafIcons[Math.floor(Math.random() * leafIcons.length)]} leaf`;
         leaf.style.left = Math.random() * 100 + '%';
         leaf.style.top = '-10%';
-        leaf.style.animationDelay = Math.random() * 10 + 's';
-        leaf.style.animationDuration = 12 + Math.random() * 25 + 's'; 
+        leaf.style.animationDelay = Math.random() * 12 + 's';
+        leaf.style.animationDuration = 15 + Math.random() * 30 + 's';
+        leaf.style.fontSize = (1 + Math.random() * 2.5) + 'rem';
         leaf.style.opacity = 0.1 + Math.random() * 0.25;
-        leaf.style.transform = `rotate(${Math.random() * 60}deg)`;
         leafContainer.appendChild(leaf);
-        setTimeout(() => leaf.remove(), 45000);
+        setTimeout(() => { leaf.remove(); leafCount--; }, 50000);
       }
-      setInterval(createLeaf, 1300);
-      for (let i = 0; i < 12; i++) setTimeout(createLeaf, i * 150);
+      let lastLeaf = 0;
+      function scheduleLeaf(timestamp) {
+        if (timestamp - lastLeaf > 1400) {
+          createLeaf();
+          lastLeaf = timestamp;
+        }
+        requestAnimationFrame(scheduleLeaf);
+      }
+      requestAnimationFrame(scheduleLeaf);
+      for (let i = 0; i < 10; i++) setTimeout(createLeaf, i * 180);
 
-      // BOKEH / PARTIKEL GLOW
+      // Bokeh particles
       const bokehContainer = document.getElementById('bokehContainer');
-      for (let i = 0; i < 30; i++) {
-        const span = document.createElement('span');
-        const size = 4 + Math.random() * 10;
-        span.style.width = size + 'px';
-        span.style.height = size + 'px';
+      for (let i = 0; i < 25; i++) {
+        let span = document.createElement('span');
         span.style.left = Math.random() * 100 + '%';
         span.style.top = Math.random() * 100 + '%';
-        span.style.animationDelay = Math.random() * 10 + 's';
-        span.style.animationDuration = 10 + Math.random() * 20 + 's';
-        span.style.background = i % 3 === 0 ? 'var(--accent-green)' : (i % 2 ? '#d4b47c' : '#b1d8a8');
-        span.style.opacity = 0.03 + Math.random() * 0.1;
+        span.style.animationDelay = Math.random() * 12 + 's';
+        span.style.animationDuration = 15 + Math.random() * 25 + 's';
+        span.style.width = (4 + Math.random() * 10) + 'px';
+        span.style.height = span.style.width;
         bokehContainer.appendChild(span);
       }
 
-      // SCROLL REVEAL (sudah ditingkatkan dengan blur/scale)
+      // Scroll reveal for sections and staggered children
       const sections = document.querySelectorAll('section');
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -744,9 +903,9 @@
           }
         });
       }, { threshold: 0.2, rootMargin: '0px' });
-      sections.forEach(section => observer.observe(section));
+      sections.forEach(s => observer.observe(s));
 
-      // smooth scroll
+      // Smooth scroll
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
           e.preventDefault();
@@ -755,22 +914,26 @@
         });
       });
 
-      // Perbaiki bug: pastikan section hero terlihat meskipun observer tidak menjangkaunya
+      // Force hero visible
       document.getElementById('home').classList.add('visible');
     })();
   </script>
 
-  <style>
-    /* penyempurnaan akhir */
-    .wrapper, nav { position: relative; z-index: 15; }
-    .leaf { z-index: 0; }
-    .bokeh { z-index: 2; }
-    body { min-height: 100vh; }
-    .btn:active { transform: scale(0.96); }
-    @supports (-moz-appearance:none) {
-      .product-card, .usp-card, .team-card, nav { background: var(--bg-secondary); }
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "AUREVIA Kelor Premium",
+    "description": "Minuman fungsional kelor dengan tiga varian: AMARTA (kolostrum), ANANTA (murni), ARKANA (smoky).",
+    "brand": "AUREVIA",
+    "offers": {
+      "@type": "AggregateOffer",
+      "lowPrice": "75000",
+      "highPrice": "95000",
+      "priceCurrency": "IDR"
     }
-    /* animasi berbeda tiap mode sudah diatur di keyframes speed */
-  </style>
+  }
+  </script>
 </body>
 </html>
